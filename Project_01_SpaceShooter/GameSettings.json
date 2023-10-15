@@ -1,0 +1,14 @@
+{
+  "RenderSettings": {
+    "width": 1280,
+    "height": 720,
+    "fullscreen": false
+  },
+  "Player": {
+    "lives": 3,
+    "speed": 5,
+    "imagePath": "Resources/Mainplayer/player.png",
+    "imageWidth": 48,
+    "imageHeight": 48
+  }
+  }
