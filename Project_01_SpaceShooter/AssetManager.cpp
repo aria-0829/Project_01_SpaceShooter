@@ -30,11 +30,10 @@ void AssetManager::LoadJSON(json::JSON& _json)
 	//}
 }
 
-SDL_Texture* AssetManager::LoadTexture(SDL_Renderer* renderer)
+SDL_Texture* AssetManager::LoadTexture(const char* texturePath, SDL_Renderer* renderer)
 {
-	SDL_Surface* tempSurface = IMG_Load("texturePath");
-	std::cout << "texturePath:" << std::endl;
-
+	std::cout << "Loading TexturePath:" << texturePath << std::endl;
+	SDL_Surface* tempSurface = IMG_Load(texturePath);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 	return texture;

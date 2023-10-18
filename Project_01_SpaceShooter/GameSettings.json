@@ -10,5 +10,23 @@
     "imagePath": "Resources/Mainplayer/player.png",
     "imageWidth": 48,
     "imageHeight": 48
-  }
-  }
+  },
+  "Enemies": [
+    {
+        "Name": "EnemyShip",
+        "lives": 3,
+        "speed": 3,
+        "imagePath": "Resources/Enemies/enemyShip.png",
+        "imageWidth": 48,
+        "imageHeight": 48
+    },
+    {
+        "Name": "EnemyUFO",
+        "lives": 2,
+        "speed": 5,
+        "imagePath": "Resources/Enemies/enemyUFO.png",
+        "imageWidth": 48,
+        "imageHeight": 48
+    }
+  ]
+}

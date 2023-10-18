@@ -17,7 +17,7 @@ void Player::Destroy()
 
 void Player::Update(SDL_Event event)
 {
-	if (SDL_KEYDOWN)
+	/*if (SDL_KEYDOWN)
 	{
 		switch (event.key.keysym.sym)  
 		{
@@ -45,6 +45,38 @@ void Player::Update(SDL_Event event)
 			std::cout << "Would you like to save?" << std::endl;
 			break;
 		}
+	}*/
+	if (SDL_KEYDOWN)
+	{
+		if (event.key.keysym.sym == SDLK_w)
+		{
+			moveY -= speed;
+			std::cout << "w" << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_s)
+		{
+			moveY += speed;
+			std::cout << "S" << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			moveX -= speed;
+			std::cout << "A" << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			moveX += speed;
+			std::cout << "D" << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_SPACE)
+		{
+			Shoot();
+			std::cout << "Space" << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_ESCAPE)
+		{
+			std::cout << "Would you like to save?" << std::endl;
+		}
 	}
 }
 
@@ -54,9 +86,18 @@ void Player::Shoot()
 	std::cout << "Player Shooting" << std::endl;
 }
 
+void Player::Render()
+{
+}
+
 SDL_Rect Player::GetPosition()
 {
 	return SDL_Rect{ moveX, moveY, imageWidth, imageHeight };
+}
+
+char* Player::GetImagePath()
+{
+	return (char*)imagePath.c_str();
 }
 
 

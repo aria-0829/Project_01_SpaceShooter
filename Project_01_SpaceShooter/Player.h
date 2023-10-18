@@ -25,7 +25,9 @@ public:
 	void Destroy();
 	void Update(SDL_Event event);
 	void Shoot();
+	void Render();
 	SDL_Rect GetPosition();
+	char* GetImagePath();
 	void Load(json::JSON& _json);
 };
 #endif // !_PLAYER_H_

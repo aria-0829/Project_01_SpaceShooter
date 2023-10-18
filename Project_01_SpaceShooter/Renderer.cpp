@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "SDL_image.h"
 
 Renderer::Renderer()
 {
@@ -17,7 +16,7 @@ void Renderer::Initialize()
 	window = SDL_CreateWindow("Space Shooter", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, fullscreen);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	playerTex = LoadTexture("Resources/Mainplayer/player.png");
+	playerTex = LoadTexture(player->GetImagePath());
 
 	//player = new Player(renderer, texture);
 	
@@ -103,8 +102,12 @@ void Renderer::Load(json::JSON& _json)
 
 SDL_Texture* Renderer::LoadTexture(const char* texturePath)  //Load a texture from a file path
 {
-	std::cout << "Loading TexturePath:" << texturePath << std::endl;
+	std::cout << "Loading TexturePath: " << texturePath << std::endl;
 	SDL_Surface* tempSurface = IMG_Load(texturePath);
+	if (!tempSurface) {
+		std::cout << "Failed to load image: " << IMG_GetError() << std::endl;
+	}
+
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 

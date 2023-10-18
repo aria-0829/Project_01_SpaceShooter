@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ASSETMANAGER_H_
-#define _ASSETMANAGER_H_
+#ifndef _ASSET_MANAGER_H_
+#define _ASSET_MANAGER_H_
 
 #include "Player.h"
 #include "Enemy.h"
@@ -23,7 +23,7 @@ public:
 	~AssetManager();
 
 	void LoadJSON(json::JSON& _json);
-	SDL_Texture* LoadTexture(SDL_Renderer* renderer);
+	SDL_Texture* LoadTexture(const char* texturePath, SDL_Renderer* renderer);
 	//void LoadFont(std::string name, std::string fileName);
 };
 
