@@ -1,4 +1,7 @@
 #include "Player.h"
+#include "Renderer.h"
+#include "AssetManager.h"
+#include "GameTime.h"
 
 Player::Player()
 {
@@ -10,74 +13,48 @@ Player::~Player()
 	std::cout << "Player Deleted" << std::endl;
 }
 
-void Player::Destroy()
+void Player::Initialize()
 {
-	std::cout << "Player Destroyed" << std::endl;
+	windowWidth = Renderer::Instance().GetWidth();
+	windowHeight = Renderer::Instance().GetHeight();
+
+	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load player tex
+	dstrect = { windowWidth / 2, (windowHeight - imageHeight), imageWidth, imageHeight};  //Player starting position at the bottom middle of the window
+
+	std::cout << "Player Initialized" << std::endl;
 }
 
-void Player::Update(SDL_Event event)
+void Player::Update()
 {
-	/*if (SDL_KEYDOWN)
-	{
-		switch (event.key.keysym.sym)  
-		{
-		case SDLK_w:
-			moveY -= speed;
-			std::cout << "w" << std::endl;
-			break;
-		case SDLK_s:
-			moveY += speed;
-			std::cout << "S" << std::endl;
-			break;
-		case SDLK_a:
-			moveX -= speed;
-			std::cout << "A" << std::endl;
-			break;
-		case SDLK_d:
-			moveX += speed;
-			std::cout << "D" << std::endl;
-			break;
-		case SDLK_SPACE:
-			Shoot();
-			std::cout << "Space" << std::endl;
-			break;
-		case SDLK_ESCAPE:
-			std::cout << "Would you like to save?" << std::endl;
-			break;
-		}
-	}*/
-	if (SDL_KEYDOWN)
-	{
-		if (event.key.keysym.sym == SDLK_w)
-		{
-			moveY -= speed;
-			std::cout << "w" << std::endl;
-		}
-		if (event.key.keysym.sym == SDLK_s)
-		{
-			moveY += speed;
-			std::cout << "S" << std::endl;
-		}
-		if (event.key.keysym.sym == SDLK_a)
-		{
-			moveX -= speed;
-			std::cout << "A" << std::endl;
-		}
-		if (event.key.keysym.sym == SDLK_d)
-		{
-			moveX += speed;
-			std::cout << "D" << std::endl;
-		}
-		if (event.key.keysym.sym == SDLK_SPACE)
-		{
-			Shoot();
-			std::cout << "Space" << std::endl;
-		}
-		if (event.key.keysym.sym == SDLK_ESCAPE)
-		{
-			std::cout << "Would you like to save?" << std::endl;
-		}
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+
+	if (currentKeyStates[SDL_SCANCODE_W]) {
+		moveY -= speed;// *GameTime::Instance().DeltaTime();
+		std::cout << "w" << std::endl;
 	}
+	if (currentKeyStates[SDL_SCANCODE_A]) {
+		moveX -= speed;// *GameTime::Instance().DeltaTime();
+		std::cout << "A" << std::endl;
+	}
+	if (currentKeyStates[SDL_SCANCODE_S]) {
+		moveY += speed;// *GameTime::Instance().DeltaTime();
+		std::cout << "S" << std::endl;
+	}
+	if (currentKeyStates[SDL_SCANCODE_D]) {
+		moveX += speed;// *GameTime::Instance().DeltaTime();
+		std::cout << "D" << std::endl;
+	}
+	if (currentKeyStates[SDL_SCANCODE_SPACE]) {
+		Shoot();
+		std::cout << "Space" << std::endl;
+	}
+}
+
+void Player::Destroy()
+{
+	SDL_DestroyTexture(tex);
+
+	std::cout << "Player Destroyed" << std::endl;
 }
 
 
@@ -88,17 +65,41 @@ void Player::Shoot()
 
 void Player::Render()
 {
+	//Apply the movement to the playerDstrect
+	dstrect.x = windowWidth / 2 + moveX;
+	dstrect.y = (windowHeight - imageHeight) + moveY;
+
+	//Keep the player within the window
+	if (moveX < -(windowWidth / 2))
+	{
+		moveX = -(windowWidth / 2);
+	}
+	if (moveX > (windowWidth - imageWidth) - windowWidth / 2)
+	{
+		moveX = (windowWidth - imageWidth) - windowWidth / 2;
+	}
+
+	if (moveY < -(windowHeight - imageHeight))
+	{
+		moveY = -(windowHeight - imageHeight);
+	}
+	if (moveY > 0)
+	{
+		moveY = 0;
+	}
+
+	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);  //Render the player
 }
 
-SDL_Rect Player::GetPosition()
-{
-	return SDL_Rect{ moveX, moveY, imageWidth, imageHeight };
-}
+//SDL_Rect Player::GetPosition()
+//{
+//	return SDL_Rect{ moveX, moveY, imageWidth, imageHeight };
+//}
 
-char* Player::GetImagePath()
-{
-	return (char*)imagePath.c_str();
-}
+//char* Player::GetImagePath()
+//{
+//	return (char*)imagePath.c_str();
+//}
 
 
 void Player::Load(json::JSON& _json)  //Load player data from json file
@@ -137,5 +138,6 @@ void Player::Load(json::JSON& _json)  //Load player data from json file
 			std::cout << "Player Image Height: " << imageHeight << std::endl;
 		}
 	}
+
 	std::cout << "Player Loaded" << std::endl;
 }

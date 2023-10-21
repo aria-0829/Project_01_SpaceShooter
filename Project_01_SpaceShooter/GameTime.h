@@ -35,7 +35,7 @@ public:
 
 	void Destroy()
 	{
-		if (instance == nullptr)
+		if (instance != nullptr)
 		{
 			delete instance;
 		}

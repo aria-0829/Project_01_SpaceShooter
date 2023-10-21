@@ -10,19 +10,34 @@
 class Game
 {
 private:
-	AssetManager* assetManager = nullptr;
-	Renderer* renderer = nullptr;
+	static Game* instance;
+
+	//AssetManager* assetManager = nullptr;
+	//Renderer* renderer = nullptr;
 	bool isRunning = true;
 
+	inline explicit Game() = default;
+	inline ~Game() = default;
+	inline explicit Game(Game const&) = delete;
+	inline Game& operator=(Game const&) = delete;
+
 public:
-	Game();
-	~Game();
+	static Game& Instance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new Game();
+		}
+		return *instance;
+	}
 
 	void Initialize();
 	void Destroy();
 	void Update();
 	void Load(json::JSON& _json);
 	void Save();
+	bool GameRunning() { return isRunning; }
+	void setGameRunning(bool value) { isRunning = value; }
 };
 #endif // !_Game_H_
 

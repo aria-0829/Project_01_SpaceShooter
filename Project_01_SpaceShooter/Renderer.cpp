@@ -1,14 +1,8 @@
 #include "Renderer.h"
+#include "AssetManager.h"
+#include "Game.h"
 
-Renderer::Renderer()
-{
-	std::cout << "Renderer Created" << std::endl;
-}
-
-Renderer::~Renderer()
-{
-	std::cout << "Renderer Deleted" << std::endl;
-}
+Renderer* Renderer::instance = nullptr;
 
 void Renderer::Initialize()
 {
@@ -16,11 +10,7 @@ void Renderer::Initialize()
 	window = SDL_CreateWindow("Space Shooter", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, fullscreen);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	playerTex = LoadTexture(player->GetImagePath());
-
-	//player = new Player(renderer, texture);
-	
-	playerDstrect = { width / 2, (height - 50), 0, 0 };  //Player starting position at the bottom middle of the screen
+	player->Initialize();
 
 	std::cout << "Renderer Initialized" << std::endl;
 }
@@ -40,33 +30,46 @@ void Renderer::Update()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		if (event.window.event == SDL_WINDOWEVENT_CLOSE)//SDL_WINDOWEVENT:
+		if (event.window.event == SDL_WINDOWEVENT_CLOSE)
 		{
+			Game::Instance().setGameRunning(false);
 			Destroy();
 		}
-		else //if(event.type = SDL_KEYDOWN)
+		else
 		{
-			player->Update(event);
+			if (event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				std::cout << "Would you like to save?" << std::endl;
+				std::cout << "Press 'S' to save the game progress or 'L' to load a file: " << std::endl;
+				if (event.key.keysym.sym == SDLK_s)
+				{
+					std::cout << "Game progress saving" << std::endl;
+				}
+				else if (event.key.keysym.sym == SDLK_l)
+				{
+					std::cout << "Game progress loading" << std::endl;
+				}
+			}
 		}
 	}
+
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
-	SDL_Rect playerMovement = player->GetPosition();  //Get the player movement from the player class
-	playerDstrect = { (width / 2 + playerMovement.x), (height - 50 + playerMovement.y), playerMovement.w, playerMovement.h };  //Apply the player movement and the image size to the playerDstrect
-	SDL_RenderCopy(renderer, playerTex, NULL, &playerDstrect);  //Render the player
+	player->Update();
+
+	player->Render();
 
 	SDL_RenderPresent(renderer);
 }
 
 void Renderer::Destroy()
 {
-	SDL_DestroyTexture(playerTex);
+	player->Destroy();
+	delete player;
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
-	player->Destroy();
-	delete player;
 	std::cout << "Renderer Destroyed" << std::endl;
 }
 
@@ -74,6 +77,8 @@ void Renderer::Load(json::JSON& _json)
 {
 	player = new Player();
 	player->Load(_json);
+
+	ui = new UI();
 
 	if (_json.hasKey("RenderSettings"))
 	{
@@ -100,19 +105,7 @@ void Renderer::Load(json::JSON& _json)
 	std::cout << "Renderer Loaded" << std::endl;
 }
 
-SDL_Texture* Renderer::LoadTexture(const char* texturePath)  //Load a texture from a file path
-{
-	std::cout << "Loading TexturePath: " << texturePath << std::endl;
-	SDL_Surface* tempSurface = IMG_Load(texturePath);
-	if (!tempSurface) {
-		std::cout << "Failed to load image: " << IMG_GetError() << std::endl;
-	}
 
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-	SDL_FreeSurface(tempSurface);
-
-	return texture;
-}
 
 
 

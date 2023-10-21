@@ -2,9 +2,6 @@
 #ifndef _ASSET_MANAGER_H_
 #define _ASSET_MANAGER_H_
 
-#include "Player.h"
-#include "Enemy.h"
-#include "Projectile.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "json.hpp"
@@ -14,16 +11,33 @@
 class AssetManager
 {
 private:
-	Player* player = nullptr;
-	std::list<Enemy*> enemies;
-	std::list<Projectile*> projectiles;
+	static AssetManager* instance;
+
+	inline explicit AssetManager() = default;
+	inline ~AssetManager() = default;
+	inline explicit AssetManager(AssetManager const&) = delete;
+	inline AssetManager& operator=(AssetManager const&) = delete;
 
 public:
-	AssetManager();
-	~AssetManager();
+	static AssetManager& Instance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new AssetManager();
+		}
+		return *instance;
+	}
 
-	void LoadJSON(json::JSON& _json);
-	SDL_Texture* LoadTexture(const char* texturePath, SDL_Renderer* renderer);
+	void Destroy()
+	{
+		if (instance != nullptr)
+		{
+			delete instance;
+		}
+	}
+
+	void Initialize();
+	SDL_Texture* LoadTexture(const char* texturePath);
 	//void LoadFont(std::string name, std::string fileName);
 };
 

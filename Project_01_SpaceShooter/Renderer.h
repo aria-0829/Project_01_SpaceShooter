@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Projectile.h"
 
+#include "UI.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "json.hpp"
@@ -15,26 +16,40 @@
 class Renderer
 {
 private:
+	static Renderer* instance;
+
 	int width = 0;
 	int height = 0;
 	bool fullscreen = false;
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+	UI* ui = nullptr;
 	Player* player = nullptr;
 	std::list<Enemy*> enemies;
 	std::list<Projectile*> projectiles;
-	SDL_Texture* playerTex = nullptr;
-	SDL_Rect playerDstrect = { 0, 0, 0, 0 };
+
+	inline explicit Renderer() = default;
+	inline ~Renderer() = default;
+	inline explicit Renderer(Renderer const&) = delete;
+	inline Renderer& operator=(Renderer const&) = delete;
 
 public:
-	Renderer();
-	~Renderer();
+	static Renderer& Instance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new Renderer();
+		}
+		return *instance;
+	}
 
 	void Initialize();
 	void Update();
 	void Destroy();
 	void Load(json::JSON& _json);
-	SDL_Texture* LoadTexture(const char* texturePath);
+	int GetWidth() { return width; }
+	int GetHeight() { return height; }
+	SDL_Renderer* GetRenderer() { return renderer; }
 };
 
 #endif // !_RENDERER_H_
