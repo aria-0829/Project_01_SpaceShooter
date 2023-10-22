@@ -1,6 +1,7 @@
 #include "EnemyUFO.h"
 #include "AssetManager.h"
 #include "Renderer.h"
+#include <random>
 
 EnemyUFO::EnemyUFO()
 {
@@ -16,29 +17,27 @@ void EnemyUFO::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load enemy tex
 
-	//Enemy start positiom at random of left
 	dstrect = { 0, 0, imageWidth, imageHeight };
-	dstrect.y = rand() % (Renderer::Instance().GetHeight() - imageHeight * 2);
 
-	//Generate a random initial direction (-1, 0, or 1)
+	//Generate a random start height
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(0, (Renderer::Instance().GetHeight() - imageHeight * 2));
+	dstrect.y = dis(gen);
+
+	//Generate a random initial direction
 	//1 means moving from left to right, -1 means moving from right to left
-	int direction = rand() % 3 - 1;
-	std::cout << "direction: " << direction << std::endl;
-	//Don't move, randomly spawned in the window
-	if (direction == 0)
-	{
-		dstrect.x = rand() % (Renderer::Instance().GetWidth() - imageWidth);
-	}
+	std::uniform_int_distribution<int> dirDis(0, 1); //Random number 0 or 1
+	direction = dirDis(gen) * 2 - 1; //Change it to -1 or 1
 
-	//Moving from left to right
-	else if (direction == 1)
+	if (direction == 1)
 	{
+		//Start from left
 		dstrect.x = -imageWidth;
 	}
-
-	//Moving from right to left
-	else if (direction == -1)
+	else
 	{
+		//Start from right
 		dstrect.x = Renderer::Instance().GetWidth();
 	}
 }
@@ -47,17 +46,20 @@ void EnemyUFO::Update()
 {
 	if (direction == 1)
 	{
+		//Moving from left to right
 		dstrect.x += speed;
 	}
-	else if (direction == -1)
+	else
 	{
+		//Moving from right to left
 		dstrect.x -= speed;
 	}
 
-	/*if (dstrect.x > Renderer::Instance().GetWidth() || dstrect.x < -imageWidth)
+	//Change direction if ufo is out of window
+	if (dstrect.x > Renderer::Instance().GetWidth() || dstrect.x < -imageWidth)
 	{
 		direction *= -1;
-	}*/
+	}
 
 	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
 }

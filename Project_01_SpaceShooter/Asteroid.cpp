@@ -17,8 +17,16 @@ Asteroid::~Asteroid()
 void Asteroid::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
-	int posX = rand() % Renderer::Instance().GetWidth();
-	dstrect = { posX, -imageHeight, imageWidth, imageHeight };
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> scaleDis(0.5f, 1.5f);
+	float scale = scaleDis(gen);
+
+	std::uniform_real_distribution<float> posDis(0, Renderer::Instance().GetWidth());
+	int posX = posDis(gen);
+
+	dstrect = { posX, -imageHeight, static_cast<int>(imageWidth * scale), static_cast<int>(imageHeight * scale) };  //Coming from top
 }
 
 void Asteroid::Update()

@@ -1,6 +1,7 @@
 #include "EnemyShip.h".
 #include "Renderer.h"
 #include "AssetManager.h"
+#include <random>
 
 EnemyShip::EnemyShip()
 {
@@ -19,7 +20,10 @@ void EnemyShip::Initialize()
 	//Enemy start positiom at random of top
 	int windowWidth = Renderer::Instance().GetWidth();
 	dstrect = { 0, -imageHeight, imageWidth, imageHeight };
-	dstrect.x = rand() % (windowWidth - imageWidth);
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(0, (windowWidth - imageWidth));
+	dstrect.x = dis(gen);
 }
 
 void EnemyShip::Update()
