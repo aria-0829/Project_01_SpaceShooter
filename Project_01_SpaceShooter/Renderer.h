@@ -3,7 +3,7 @@
 #define _RENDERER_H_
 
 #include "Player.h"
-#include "Enemy.h"
+#include "EnemySpawner.h"
 #include "Projectile.h"
 
 #include "UI.h"
@@ -25,7 +25,7 @@ private:
 	SDL_Renderer* renderer = nullptr;
 	UI* ui = nullptr;
 	Player* player = nullptr;
-	std::list<Enemy*> enemies;
+	EnemySpawner* enemySpawner = nullptr;
 	std::list<Projectile*> projectiles;
 
 	inline explicit Renderer() = default;

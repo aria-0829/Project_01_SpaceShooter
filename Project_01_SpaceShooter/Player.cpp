@@ -28,6 +28,9 @@ void Player::Update()
 {
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
+	//GameTime& gameTime = GameTime::Instance();
+	//float deltaTime = gameTime.DeltaTime();
+
 	if (currentKeyStates[SDL_SCANCODE_W]) {
 		moveY -= speed;// *GameTime::Instance().DeltaTime();
 		std::cout << "w" << std::endl;
@@ -139,5 +142,5 @@ void Player::Load(json::JSON& _json)  //Load player data from json file
 		}
 	}
 
-	std::cout << "Player Loaded" << std::endl;
+	std::cout << "Player Load Complete." << std::endl << std::endl;
 }

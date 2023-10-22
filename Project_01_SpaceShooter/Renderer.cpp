@@ -11,6 +11,7 @@ void Renderer::Initialize()
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 	player->Initialize();
+	enemySpawner->Initialize();
 
 	std::cout << "Renderer Initialized" << std::endl;
 }
@@ -40,14 +41,15 @@ void Renderer::Update()
 			if (event.key.keysym.sym == SDLK_ESCAPE)
 			{
 				std::cout << "Would you like to save?" << std::endl;
-				std::cout << "Press 'S' to save the game progress or 'L' to load a file: " << std::endl;
-				if (event.key.keysym.sym == SDLK_s)
+				std::cout << "Press 'K' to save the game progress or 'L' to load a file: " << std::endl;
+				switch (event.key.keysym.sym)
 				{
+				case SDLK_k:
 					std::cout << "Game progress saving" << std::endl;
-				}
-				else if (event.key.keysym.sym == SDLK_l)
-				{
+					break;
+				case SDLK_l:
 					std::cout << "Game progress loading" << std::endl;
+					break;
 				}
 			}
 		}
@@ -57,16 +59,24 @@ void Renderer::Update()
 	SDL_RenderClear(renderer);
 
 	player->Update();
-
 	player->Render();
+
+	enemySpawner->Update();
 
 	SDL_RenderPresent(renderer);
 }
 
 void Renderer::Destroy()
 {
+	//Destroy enemySpawner
+	enemySpawner->Destroy();
+	delete enemySpawner;
+
+	//Destroy player
 	player->Destroy();
 	delete player;
+
+	//Destroy window and renderer
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
@@ -75,11 +85,6 @@ void Renderer::Destroy()
 
 void Renderer::Load(json::JSON& _json)
 {
-	player = new Player();
-	player->Load(_json);
-
-	ui = new UI();
-
 	if (_json.hasKey("RenderSettings"))
 	{
 		json::JSON renderSettings = _json["RenderSettings"];
@@ -87,23 +92,29 @@ void Renderer::Load(json::JSON& _json)
 		if (renderSettings.hasKey("width"))
 		{
 			width = renderSettings["width"].ToInt();
-			std::cout << "width: " << width << std::endl;
 		}
 
 		if (renderSettings.hasKey("height"))
 		{
 			height = renderSettings["height"].ToInt();
-			std::cout << "height: " << height << std::endl;
 		}
 
 		if (renderSettings.hasKey("fullscreen"))
 		{
 			fullscreen = renderSettings["fullscreen"].ToBool();
-			std::cout << "fullscreen: " << fullscreen << std::endl;
 		}
 	}
+
+	player = new Player();
+	player->Load(_json);
+
+	enemySpawner = new EnemySpawner();
+	enemySpawner->Load(_json);
+
+	ui = new UI();
+	
 	std::cout << "Renderer Loaded" << std::endl;
-}
+       }
 
 
 

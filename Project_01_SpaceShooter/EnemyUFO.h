@@ -1,35 +1,31 @@
 #pragma once
-#ifndef _ENEMY_H_
-#define _ENEMY_H_
+#ifndef _ENEMY_UFO_H_
+#define _ENEMY_UFO_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
+#include "Enemy.h"
 
-class Enemy
+class EnemyUFO : public Enemy
 {
 private:
 	int speed = 0;
 	int moveX = 0;
 	int moveY = 0;
-	int imageWidth = 0;
+ 	int imageWidth = 0;
 	int imageHeight = 0;
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
 
 public:
-	Enemy();
-	~Enemy();
+	EnemyUFO();
+	~EnemyUFO();
 
 	void Initialize();
 	void Update();
 	void Destroy();
-	void Render();
-	int GetPositionY() { return dstrect.y; }
-
+	void Load(json::JSON& _json);
 };
-#endif // !_ENEMY_H_
+
+#endif // !_ENEMY_UFO_H_
 
 

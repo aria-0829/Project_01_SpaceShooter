@@ -11,22 +11,18 @@
     "imageWidth": 48,
     "imageHeight": 48
   },
-  "Enemies": [
-    {
-        "Name": "EnemyShip",
-        "lives": 3,
-        "speed": 3,
+  "Enemies": {
+    "EnemyShip": {
+        "speed": 1,
         "imagePath": "Resources/Enemies/enemyShip.png",
         "imageWidth": 48,
         "imageHeight": 48
     },
-    {
-        "Name": "EnemyUFO",
-        "lives": 2,
-        "speed": 5,
+    "EnemyUFO": {
+        "speed": 1,
         "imagePath": "Resources/Enemies/enemyUFO.png",
         "imageWidth": 48,
         "imageHeight": 48
     }
-  ]
+  }
 }

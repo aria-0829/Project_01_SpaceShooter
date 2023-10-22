@@ -10,7 +10,6 @@ void AssetManager::Initialize()
 
 SDL_Texture* AssetManager::LoadTexture(const char* texturePath)
 {
-	std::cout << "Loading TexturePath: " << texturePath << std::endl;
 	SDL_Surface* tempSurface = IMG_Load(texturePath);
 
 	if (!tempSurface) {

@@ -29,9 +29,9 @@ public:
 	void Initialize();
 	void Update();
 	void Destroy();
+	void Render();
 	void Load(json::JSON& _json);
 	void Shoot();
-	void Render();
 	//SDL_Rect GetPosition();
 	//char* GetImagePath();
 };
