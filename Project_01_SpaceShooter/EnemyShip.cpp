@@ -27,7 +27,7 @@ void EnemyShip::Update()
 	dstrect.y += speed;
 
 	static int frameCount = 0;
-	const int spawnInterval = 10;
+	const int spawnInterval = 20;
 
 	if (frameCount % spawnInterval == 0)
 	{
@@ -53,6 +53,8 @@ void EnemyShip::Update()
 			}
 			return false; //Keep the projectile
 		});
+
+	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
 }
 
 void EnemyShip::Destroy()
@@ -61,7 +63,6 @@ void EnemyShip::Destroy()
 	{
 		projectile->Destroy();
 		delete projectile;
-		projectile = nullptr; //?
 	}
 	enemyProjectiles.clear();
 

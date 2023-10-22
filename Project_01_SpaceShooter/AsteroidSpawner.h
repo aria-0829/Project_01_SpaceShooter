@@ -13,13 +13,9 @@ class AsteroidSpawner
 {
 private:
 	std::list<Asteroid*> asteroids;
-
+	json::JSON asteroidData;
 	//int spawnRate = 0;
 	//int spawnTimer = 0;
-	//int spawnX = 0;
-	//int spawnY = 0;
-	//int windowWidth = 0;
-	//int windowHeight = 0;
 
 public:
 	AsteroidSpawner();
@@ -30,6 +26,7 @@ public:
 	void Destroy();
 	void SpawnAsteroids();
 	void AddAsteroid(Asteroid* _asteroid);
+	void Load();
 };
 
 #endif // !_ASTEROID_SPAWNER_H_

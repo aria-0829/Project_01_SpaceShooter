@@ -48,6 +48,7 @@ public:
 
 	void Initialize();
 	void Update();
+	Player* GetPlayer() { return player; }
 	void Destroy();
 	void Load(json::JSON& _json);
 	int GetWidth() { return width; }

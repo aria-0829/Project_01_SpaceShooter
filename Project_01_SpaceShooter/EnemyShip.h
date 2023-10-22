@@ -9,7 +9,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include <list>
-
+#include "Circle.h"
 
 class EnemyShip
 {
@@ -21,6 +21,7 @@ private:
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
 	std::list<EnemyProjectile*> enemyProjectiles;
+	Circle collisionCircle = { 0, 0, 0 };
 
 public:
 	EnemyShip();
@@ -32,6 +33,7 @@ public:
 	void Render();
 	void Load(json::JSON& _json);
 	int GetPositionY() { return dstrect.y; }
+	Circle GetCollisionCircle() const { return collisionCircle; }
 };
 #endif // !_ENEMY_SHIP_H_
 

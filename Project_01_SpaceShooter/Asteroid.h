@@ -6,6 +6,7 @@
 #include "json.hpp"
 #include <fstream>
 #include "SDL.h"
+#include "Circle.h"
 
 class Asteroid
 {
@@ -16,6 +17,7 @@ private:
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
+	Circle collisionCircle = { 0, 0, 0 };
 
 public:
 	Asteroid();
@@ -25,8 +27,9 @@ public:
 	void Update();
 	void Destroy();
 	void Render();
-	void Load();
+	void Load(json::JSON& _json);
 	int GetPositionY() { return dstrect.y; }
+	Circle GetCollisionCircle() const { return collisionCircle; }
 };
 #endif // !_ASTEROID_H_
 

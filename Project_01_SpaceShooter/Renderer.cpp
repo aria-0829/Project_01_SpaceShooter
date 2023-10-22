@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "AssetManager.h"
 #include "Game.h"
+#include "CollisionDetection.h"
 
 Renderer* Renderer::instance = nullptr;
 
@@ -106,6 +107,12 @@ void Renderer::Destroy()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+
+	if (instance != nullptr)
+	{
+		delete instance;
+	}
+
 	std::cout << "Renderer Destroyed" << std::endl;
 }
 
@@ -140,7 +147,7 @@ void Renderer::Load(json::JSON& _json)
 	player->Load(_json);
 
 	asteroidSpawner = new AsteroidSpawner();
-	//asteroidSpawner->Load(_json);
+	asteroidSpawner->Load();
 
 	enemySpawner = new EnemySpawner();
 	enemySpawner->Load();

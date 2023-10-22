@@ -7,6 +7,7 @@
 #include <fstream>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "Circle.h"
 
 class EnemyUFO
 {
@@ -18,6 +19,7 @@ private:
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
+	Circle collisionCircle = { 0, 0, 0 };
 
 public:
 	EnemyUFO();
@@ -29,6 +31,7 @@ public:
 	void Render();
 	void Load(json::JSON& _json);
 	int GetPositionY() { return dstrect.y; }
+	Circle GetCollisionCircle() const { return collisionCircle; }
 };
 
 #endif // !_ENEMY_UFO_H_

@@ -122,6 +122,9 @@
     <ClInclude Include="EnemyProjectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Asteroid.json">

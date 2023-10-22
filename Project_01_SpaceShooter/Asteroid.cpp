@@ -1,6 +1,8 @@
 #include "Asteroid.h"
 #include "AssetManager.h"
 #include "Renderer.h"
+#include "CollisionDetection.h"
+#include <random>
 
 Asteroid::Asteroid()
 {
@@ -21,14 +23,15 @@ void Asteroid::Initialize()
 
 void Asteroid::Update()
 {
-	dstrect.y += speed;
+	dstrect.y += speed; //Move down
+
+	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
 }
 
 void Asteroid::Destroy()
 {
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	//CollisionSystem::Instance().UnregisterAsteroid(this);
 	std::cout << "Asteroid Destroyed" << std::endl;
 }
 
@@ -37,35 +40,26 @@ void Asteroid::Render()
 	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
-void Asteroid::Load()
+void Asteroid::Load(json::JSON& _json)
 {
-	std::ifstream inputStream("Data/Asteroid.json");
-	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-	json::JSON documentData = json::JSON::Load(str);
-
-	if (documentData.hasKey("Asteroid"))
+	if (_json.hasKey("speed"))
 	{
-		json::JSON asteroidData = documentData["Asteroid"];
+		speed = _json["speed"].ToInt();  //Load speed
+	}
 
-		if (asteroidData.hasKey("speed"))
-		{
-			speed = asteroidData["speed"].ToInt();  //Load speed
-		}
+	if (_json.hasKey("imagePath"))
+	{
+		imagePath = _json["imagePath"].ToString();  //Load image path
+	}
 
-		if (asteroidData.hasKey("imagePath"))
-		{
-			imagePath = asteroidData["imagePath"].ToString();  //Load image path
-		}
+	if (_json.hasKey("imageWidth"))
+	{
+		imageWidth = _json["imageWidth"].ToInt();  //Load image width
+	}
 
-		if (asteroidData.hasKey("imageWidth"))
-		{
-			imageWidth = asteroidData["imageWidth"].ToInt();  //Load image width
-		}
-
-		if (asteroidData.hasKey("imageHeight"))
-		{
-			imageHeight = asteroidData["imageHeight"].ToInt();  //Load image height
-		}
+	if (_json.hasKey("imageHeight"))
+	{
+		imageHeight = _json["imageHeight"].ToInt();  //Load image height
 	}
 	
 	std::cout << "Asteroid Loaded" << std::endl;

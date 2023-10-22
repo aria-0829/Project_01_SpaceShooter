@@ -47,6 +47,7 @@ void Player::Update()
 		Shoot();
 	}
 
+
 	projectiles.remove_if([](Projectile* projectile)
 	{
 		projectile->Update();
@@ -79,7 +80,6 @@ void Player::Destroy()
 
 void Player::Shoot()
 {
-	std::cout << "Player Shooting" << std::endl;
 	static int frameCount = 0;
 	const int spawnInterval = 5;
 
@@ -97,6 +97,13 @@ void Player::Shoot()
 void Player::AddProjectile(Projectile* _projectile)
 {
 	projectiles.push_back(_projectile);
+}
+
+void Player::Damaged()
+{
+	lives--;
+	std::cout << "Player Damaged" << std::endl;
+	std::cout << "Lives: " << lives << std::endl;
 }
 
 void Player::Render()
@@ -124,14 +131,11 @@ void Player::Render()
 		moveY = 0;
 	}
 
+	collisionCircle = { dstrect.x, dstrect.y, imageWidth / 2 };
+
 	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);  //Render the player
 
 }
-
-//SDL_Rect Player::GetPosition()
-//{
-//	return SDL_Rect{ moveX, moveY, imageWidth, imageHeight };
-//}
 
 void Player::Load(json::JSON& _json)  //Load player data from json file
 {

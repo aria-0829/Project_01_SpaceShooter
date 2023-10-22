@@ -7,7 +7,9 @@
 #include "json.hpp"
 #include <fstream>
 #include "SDL.h"
+#include "SDL_image.h"
 #include <list>
+#include "Circle.h"
 
 class Player
 {
@@ -24,6 +26,7 @@ private:
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
 	std::list<Projectile*> projectiles;
+	Circle collisionCircle = { 0, 0, 0 };;
 
 public:
 	Player();
@@ -36,6 +39,8 @@ public:
 	void Load(json::JSON& _json);
 	void Shoot();
 	void AddProjectile(Projectile* _projectile);
+	Circle GetCollisionCircle() { return collisionCircle; }
+	void Damaged();
 	//SDL_Rect GetPosition();
 	//char* GetImagePath();
 };

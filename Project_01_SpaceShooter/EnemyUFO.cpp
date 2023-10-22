@@ -54,11 +54,12 @@ void EnemyUFO::Update()
 		dstrect.x -= speed;
 	}
 
-	if (dstrect.x > Renderer::Instance().GetWidth() || dstrect.x < -imageWidth)
+	/*if (dstrect.x > Renderer::Instance().GetWidth() || dstrect.x < -imageWidth)
 	{
 		direction *= -1;
-	}
+	}*/
 
+	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
 }
 
 void EnemyUFO::Destroy()

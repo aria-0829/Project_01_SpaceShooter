@@ -175,6 +175,7 @@
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="AsteroidSpawner.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyProjectile.h" />

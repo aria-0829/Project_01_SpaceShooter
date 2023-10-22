@@ -2,15 +2,42 @@
 #ifndef _COLLISION_DETECTION_H_
 #define _COLLISION_DETECTION_H_
 
+#include "Player.h"
+#include "Projectile.h"
+#include "EnemyShip.h"
+#include "EnemyUFO.h"
+#include "EnemyProjectile.h"
+#include "Asteroid.h"
+
 class CollisionDetection
 {
-public:
-	CollisionDetection();
-	~CollisionDetection();
+private:
+	static CollisionDetection* instance;
 
-	bool CheckCollision();
-	bool CheckCollisionWithPlayer();
-	bool CheckCollisionWithProjectile();
+	inline explicit CollisionDetection() = default;
+	inline ~CollisionDetection() = default;
+	inline explicit CollisionDetection(CollisionDetection const&) = delete;
+	inline CollisionDetection& operator=(CollisionDetection const&) = delete;
+
+public:
+	static CollisionDetection& Instance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new CollisionDetection();
+		}
+		return *instance;
+	}
+
+	void Destroy()
+	{
+		if (instance != nullptr)
+		{
+			delete instance;
+		}
+	}
+
+	bool CheckCollision(const Circle& collisionCircle1, const Circle& collisionCircle2);
 
 };
 #endif // !_COLLISION_DETECTION_H_
