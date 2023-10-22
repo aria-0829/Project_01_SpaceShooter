@@ -88,6 +88,20 @@ void Renderer::Destroy()
 	player->Destroy();
 	delete player;
 
+	//Destroy background
+	background1->Destroy();
+	delete background1;
+	background2->Destroy();
+	delete background2;
+
+	//Destroy asteroidSpawner
+	asteroidSpawner->Destroy();
+	delete asteroidSpawner;
+
+	//Destroy UI
+	ui->Destroy();
+	delete ui;
+
 	//Destroy window and renderer
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
@@ -129,7 +143,7 @@ void Renderer::Load(json::JSON& _json)
 	//asteroidSpawner->Load(_json);
 
 	enemySpawner = new EnemySpawner();
-	enemySpawner->Load(_json);
+	enemySpawner->Load();
 
 	ui = new UI();
 	

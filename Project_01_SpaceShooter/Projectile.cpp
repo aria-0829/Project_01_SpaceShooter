@@ -37,7 +37,7 @@ void Projectile::Render()
 
 void Projectile::Load()
 {
-	std::ifstream inputStream("Projectile.json");
+	std::ifstream inputStream("Data/Projectile.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON documentData = json::JSON::Load(str);
 

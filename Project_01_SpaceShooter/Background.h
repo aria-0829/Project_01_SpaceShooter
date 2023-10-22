@@ -13,7 +13,7 @@ class Background
 private:
 	int scrollSpeed = 0;
 	std::string imagePath = "";
-	SDL_Texture* tex;
+	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
 
 public:

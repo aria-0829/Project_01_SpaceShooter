@@ -8,14 +8,14 @@ Game* Game::instance = nullptr;
 void Game::Initialize()
 {
 	//Load GameSettings.json
-	std::ifstream inputStream("GameSettings.json");
+	std::ifstream inputStream("Data/GameSettings.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON documentData = json::JSON::Load(str);
 
 	//GameTime::Instance().Initialize();
 	AssetManager::Instance().Initialize();
 	Renderer::Instance().Load(documentData);
-	Renderer::Instance().Initialize(); // This is the line that causes the error
+	Renderer::Instance().Initialize();
 
 	std::cout << "Game Initialized" << std::endl << std::endl;
 }

@@ -11,25 +11,10 @@
     "imageWidth": 48,
     "imageHeight": 48
   },
-  "Enemies": {
-    "EnemyShip": {
-        "speed": 1,
-        "imagePath": "Resources/Enemies/enemyShip.png",
-        "imageWidth": 48,
-        "imageHeight": 48
-    },
-    "EnemyUFO": {
-        "speed": 1,
-        "imagePath": "Resources/Enemies/enemyUFO.png",
-        "imageWidth": 48,
-        "imageHeight": 48
-    }
-  },
   "Background": {
     "scrollSpeed": 2,
     "imagePath": "Resources/Background/starBackground.png",
     "imageWidth": 256,
     "imageHeight": 256
   }
-  
 }

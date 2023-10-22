@@ -47,7 +47,7 @@ void AsteroidSpawner::Destroy()
 void AsteroidSpawner::SpawnAsteroids()
 {
 	static int frameCount = 0;
-	const int spawnInterval = 60;
+	const int spawnInterval = 35;
 
 	if (frameCount % spawnInterval == 0)
 	{

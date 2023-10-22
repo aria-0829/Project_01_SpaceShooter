@@ -39,7 +39,7 @@ void Asteroid::Render()
 
 void Asteroid::Load()
 {
-	std::ifstream inputStream("Asteroid.json");
+	std::ifstream inputStream("Data/Asteroid.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON documentData = json::JSON::Load(str);
 

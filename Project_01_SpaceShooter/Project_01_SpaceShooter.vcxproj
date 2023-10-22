@@ -157,6 +157,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EnemyUFO.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="EnemyUFO.h" />
@@ -188,9 +190,10 @@
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Asteroid.json" />
-    <None Include="GameSettings.json" />
-    <None Include="Projectile.json" />
+    <None Include="Data\Asteroid.json" />
+    <None Include="Data\Enemies.json" />
+    <None Include="Data\GameSettings.json" />
+    <None Include="Data\Projectile.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,5 @@
 #include "EnemySpawner.h"
+#include "Renderer.h"
 
 EnemySpawner::EnemySpawner()
 {
@@ -10,85 +11,108 @@ EnemySpawner::~EnemySpawner()
 	std::cout << "Enemy Spawner Deleted" << std::endl;
 }
 
-void EnemySpawner::Initialize()
-{
-	
-
-	enemyShip->Initialize();
-	enemyUFO->Initialize();
-
-	std::cout << "Renderer Initialized" << std::endl;
-}
-
 void EnemySpawner::Update()
 {
 	SpawnEnemies();
 
-	for (auto& enemy : enemies)
-	{
-		enemy->Update();
-		enemy->Render();
-
-		// Check if the enemy is out of the window, if so, destroy it
-		if (enemy->GetPositionY() > windowHeight)
+	ships.remove_if([](EnemyShip* ship)
 		{
-			enemy->Destroy();
-			delete enemy;
-			enemies.remove(enemy);
-		}
+			ship->Update();
+			ship->Render();
+
+			//Check if the ship is out of the window
+			if (ship->GetPositionY() > Renderer::Instance().GetHeight())
+			{
+				ship->Destroy();
+				delete ship;
+				return true; //Remove the ship
+			}
+			return false; //Keep the ship
+		});
+	for (auto& ufo : ufos)
+	{
+		ufo->Update();
+		ufo->Render();
 	}
+	
+
+	//ufos.remove_if([](EnemyUFO* ufo)
+	//	{
+	//		ufo->Update();
+	//		ufo->Render();
+
+	//		//Check if the ufo is out of the window
+	//		if (ufo->GetPositionY() > Renderer::Instance().GetHeight())
+	//		{
+	//			ufo->Destroy();
+	//			delete ufo;
+	//			return true; //Remove the ufo
+	//		}
+	//		return false; //Keep the ufo
+	//	});
 }
 
 void EnemySpawner::SpawnEnemies()
 {
 	static int frameCount = 0;
-	const int spawnInterval = 100;
+	const int spawnInterval = 50;
 
 	if (frameCount % spawnInterval == 0) 
 	{
 		// Spawn enemyShip
-		Enemy* enemyShip = new EnemyShip();
-		AddEnemy(enemyShip);
+		EnemyShip* ship = new EnemyShip();
+		AddShip(ship);
+		ship->Load(enemiesData);
+		ship->Initialize();
 
 		// Spawn enemyUFO
-		Enemy* enemyUFO = new EnemyUFO();
-		AddEnemy(enemyUFO);
+		EnemyUFO* ufo = new EnemyUFO();
+		AddUFO(ufo);
+		ufo->Load(enemiesData);
+		ufo->Initialize();
 	}
 
 	++frameCount;
 }
 
+
 void EnemySpawner::Destroy()
 {
-	for (auto& enemy : enemies)
+	for (auto& ship : ships)
 	{
-		enemy->Destroy();
-		delete enemy;
+		ship->Destroy();
+		delete ship;
 	}
-	enemies.clear();
+	ships.clear();
 
-	enemyUFO->Destroy();
-	delete enemyUFO;
-	enemyShip->Destroy();
-	delete enemyShip;
-}
-
-void EnemySpawner::AddEnemy(Enemy* _enemy)
-{
-	enemies.push_back(_enemy);
-}
-
-void EnemySpawner::Load(json::JSON& _json)
-{
-	if (_json.hasKey("Enemies"))
+	for (auto& ufo : ufos)
 	{
-		json::JSON enemiesData = _json["Enemies"];
-
-		EnemyShip* enemyShip = new EnemyShip();
-		enemyShip->Load(enemiesData);
-		EnemyUFO* enemyUFO = new EnemyUFO();
-		enemyUFO->Load(enemiesData);
+		ufo->Destroy();
+		delete ufo;
 	}
-	std::cout << "Enemy Spawner Loaded" << std::endl;
+	ufos.clear();
 
 }
+
+void EnemySpawner::AddShip(EnemyShip* _enemy)
+{
+	ships.push_back(_enemy);
+}
+
+void EnemySpawner::AddUFO(EnemyUFO* _enemy)
+{
+	ufos.push_back(_enemy);
+}
+
+void EnemySpawner::Load()
+{
+	std::ifstream inputStream("Data/Enemies.json");
+	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+	json::JSON documentData = json::JSON::Load(str);
+
+	if (documentData.hasKey("Enemies"))
+	{
+		enemiesData = documentData["Enemies"];
+	}
+}
+

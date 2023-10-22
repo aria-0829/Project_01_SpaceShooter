@@ -1,7 +1,6 @@
 #include "EnemyShip.h".
 #include "Renderer.h"
 #include "AssetManager.h"
-#include "SDL_image.h"
 
 EnemyShip::EnemyShip()
 {
@@ -19,16 +18,59 @@ void EnemyShip::Initialize()
 
 	//Enemy start positiom at random of top
 	int windowWidth = Renderer::Instance().GetWidth();
-	dstrect = { moveX, moveY, imageWidth, imageHeight };
+	dstrect = { 0, -imageHeight, imageWidth, imageHeight };
 	dstrect.x = rand() % (windowWidth - imageWidth);
 }
 
 void EnemyShip::Update()
 {
+	dstrect.y += speed;
+
+	static int frameCount = 0;
+	const int spawnInterval = 10;
+
+	if (frameCount % spawnInterval == 0)
+	{
+		EnemyProjectile* projectile = new EnemyProjectile();
+		enemyProjectiles.push_back(projectile);
+		projectile->Load();
+		projectile->Initialize((dstrect.x + imageWidth / 2), dstrect.y + imageHeight);
+	}
+
+	++frameCount;
+
+	enemyProjectiles.remove_if([](EnemyProjectile* projectile)
+		{
+			projectile->Update();
+			projectile->Render();
+
+			//Check if the projectile is out of the window
+			if (projectile->GetPositionY() < 0)
+			{
+				projectile->Destroy();
+				delete projectile;
+				return true; //Remove the projectile
+			}
+			return false; //Keep the projectile
+		});
 }
 
 void EnemyShip::Destroy()
 {
+	for (auto projectile : enemyProjectiles)
+	{
+		projectile->Destroy();
+		delete projectile;
+		projectile = nullptr; //?
+	}
+	enemyProjectiles.clear();
+
+	std::cout << "EnemyShip Destroyed" << std::endl;
+}
+
+void EnemyShip::Render()
+{
+	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void EnemyShip::Load(json::JSON& _json)
@@ -40,27 +82,23 @@ void EnemyShip::Load(json::JSON& _json)
 		if (shipData.hasKey("speed"))
 		{
 			speed = shipData["speed"].ToInt();  //Load speed
-			std::cout << "Enemy Speed: " << speed << std::endl;
 		}
 
 		if (shipData.hasKey("imagePath"))
 		{
 			imagePath = shipData["imagePath"].ToString();  //Load image path
-			std::cout << "Enemy Image Path: " << imagePath << std::endl;
 		}
 
 		if (shipData.hasKey("imageWidth"))
 		{
 			imageWidth = shipData["imageWidth"].ToInt();  //Load image width
-			std::cout << "Enemy Image Width: " << imageWidth << std::endl;
 		}
 
 		if (shipData.hasKey("imageHeight"))
 		{
 			imageHeight = shipData["imageHeight"].ToInt();  //Load image height
-			std::cout << "Enemy Image Height: " << imageHeight << std::endl;
 		}
 	}
 
-	std::cout << "EnemyShip Load Complete." << std::endl << std::endl;
+	std::cout << "EnemyShip Loaded" << std::endl;
 }
