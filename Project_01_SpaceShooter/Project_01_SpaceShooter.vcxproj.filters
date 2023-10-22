@@ -63,6 +63,9 @@
     <ClCompile Include="EnemyUFO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AsteroidSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -110,9 +113,18 @@
     <ClInclude Include="EnemyUFO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AsteroidSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="GameSettings.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Projectile.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Asteroid.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

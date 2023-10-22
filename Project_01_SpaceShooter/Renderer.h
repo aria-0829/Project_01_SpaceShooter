@@ -4,7 +4,8 @@
 
 #include "Player.h"
 #include "EnemySpawner.h"
-#include "Projectile.h"
+#include "Background.h"
+#include "AsteroidSpawner.h"
 
 #include "UI.h"
 #include "SDL.h"
@@ -24,9 +25,11 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	UI* ui = nullptr;
+	Background* background1 = nullptr;
+	Background* background2 = nullptr;
 	Player* player = nullptr;
 	EnemySpawner* enemySpawner = nullptr;
-	std::list<Projectile*> projectiles;
+	AsteroidSpawner* asteroidSpawner = nullptr;
 
 	inline explicit Renderer() = default;
 	inline ~Renderer() = default;

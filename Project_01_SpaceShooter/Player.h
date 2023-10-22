@@ -2,10 +2,12 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+#include "Projectile.h"
 #include <string>
 #include "json.hpp"
 #include <fstream>
 #include "SDL.h"
+#include <list>
 
 class Player
 {
@@ -21,6 +23,7 @@ private:
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
+	std::list<Projectile*> projectiles;
 
 public:
 	Player();
@@ -32,6 +35,7 @@ public:
 	void Render();
 	void Load(json::JSON& _json);
 	void Shoot();
+	void AddProjectile(Projectile* _projectile);
 	//SDL_Rect GetPosition();
 	//char* GetImagePath();
 };

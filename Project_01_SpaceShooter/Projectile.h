@@ -2,13 +2,31 @@
 #ifndef _PROJECTILE_H_
 #define _PROJECTILE_H_
 
+#include <string>
+#include "json.hpp"
+#include <fstream>
+#include "SDL.h"
+
 class Projectile
 {
+private:
+	int speed = 0;
+	int imageWidth = 0;
+	int imageHeight = 0;
+	std::string imagePath = "";
+	SDL_Texture* tex = nullptr;
+	SDL_Rect dstrect = { 0, 0, 0, 0 };
+
 public:
 	Projectile();
 	~Projectile();
 
-
+	void Initialize(int posX, int posY);
+	void Update();
+	void Destroy();
+	void Render();
+	void Load();
+	int GetPositionY() { return dstrect.y; }
 };
 
 #endif // !_PROJECTILE_H_

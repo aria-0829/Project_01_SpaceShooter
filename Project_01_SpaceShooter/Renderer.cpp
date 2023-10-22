@@ -10,8 +10,11 @@ void Renderer::Initialize()
 	window = SDL_CreateWindow("Space Shooter", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, fullscreen);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+	background1->Initialize(0);
+	background2->Initialize(-height);
 	player->Initialize();
-	enemySpawner->Initialize();
+	//asteroidSpawner->Initialize();
+	//enemySpawner->Initialize();
 
 	std::cout << "Renderer Initialized" << std::endl;
 }
@@ -40,6 +43,8 @@ void Renderer::Update()
 		{
 			if (event.key.keysym.sym == SDLK_ESCAPE)
 			{
+				Game::Instance().setGameRunning(false);
+
 				std::cout << "Would you like to save?" << std::endl;
 				std::cout << "Press 'K' to save the game progress or 'L' to load a file: " << std::endl;
 				switch (event.key.keysym.sym)
@@ -57,6 +62,13 @@ void Renderer::Update()
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
+
+	background1->Update();
+	background1->Render();
+	background2->Update();
+	background2->Render();
+
+	asteroidSpawner->Update();
 
 	player->Update();
 	player->Render();
@@ -105,8 +117,16 @@ void Renderer::Load(json::JSON& _json)
 		}
 	}
 
+	background1 = new Background();
+	background1->Load(_json);
+	background2 = new Background();
+	background2->Load(_json);
+
 	player = new Player();
 	player->Load(_json);
+
+	asteroidSpawner = new AsteroidSpawner();
+	//asteroidSpawner->Load(_json);
 
 	enemySpawner = new EnemySpawner();
 	enemySpawner->Load(_json);
@@ -114,9 +134,5 @@ void Renderer::Load(json::JSON& _json)
 	ui = new UI();
 	
 	std::cout << "Renderer Loaded" << std::endl;
-       }
-
-
-
-
+}
 

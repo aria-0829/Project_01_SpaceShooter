@@ -1,0 +1,8 @@
+{
+  "Projectile": {
+    "speed": 5,
+    "imagePath": "Resources/Mainplayer/laserGreen.png",
+    "imageWidth": 5,
+    "imageHeight": 17
+  }
+}

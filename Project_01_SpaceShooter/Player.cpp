@@ -18,7 +18,7 @@ void Player::Initialize()
 	windowWidth = Renderer::Instance().GetWidth();
 	windowHeight = Renderer::Instance().GetHeight();
 
-	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load player tex
+	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
 	dstrect = { windowWidth / 2, (windowHeight - imageHeight), imageWidth, imageHeight};  //Player starting position at the bottom middle of the window
 
 	std::cout << "Player Initialized" << std::endl;
@@ -33,29 +33,45 @@ void Player::Update()
 
 	if (currentKeyStates[SDL_SCANCODE_W]) {
 		moveY -= speed;// *GameTime::Instance().DeltaTime();
-		std::cout << "w" << std::endl;
 	}
 	if (currentKeyStates[SDL_SCANCODE_A]) {
 		moveX -= speed;// *GameTime::Instance().DeltaTime();
-		std::cout << "A" << std::endl;
 	}
 	if (currentKeyStates[SDL_SCANCODE_S]) {
 		moveY += speed;// *GameTime::Instance().DeltaTime();
-		std::cout << "S" << std::endl;
 	}
 	if (currentKeyStates[SDL_SCANCODE_D]) {
 		moveX += speed;// *GameTime::Instance().DeltaTime();
-		std::cout << "D" << std::endl;
 	}
 	if (currentKeyStates[SDL_SCANCODE_SPACE]) {
 		Shoot();
-		std::cout << "Space" << std::endl;
 	}
+
+	projectiles.remove_if([](Projectile* projectile)
+	{
+		projectile->Update();
+		projectile->Render();
+
+		//Check if the projectile is out of the window
+		if (projectile->GetPositionY() < 0)
+		{
+			projectile->Destroy();
+			delete projectile;
+			return true; //Remove the projectile
+		}
+		return false; //Keep the projectile
+	});
 }
 
 void Player::Destroy()
 {
-	SDL_DestroyTexture(tex);
+	for (auto projectile : projectiles)
+	{
+		projectile->Destroy();
+		delete projectile;
+		projectile = nullptr; //?
+	}
+	projectiles.clear();
 
 	std::cout << "Player Destroyed" << std::endl;
 }
@@ -64,6 +80,23 @@ void Player::Destroy()
 void Player::Shoot()
 {
 	std::cout << "Player Shooting" << std::endl;
+	static int frameCount = 0;
+	const int spawnInterval = 5;
+
+	if (frameCount % spawnInterval == 0)
+	{
+		Projectile* projectile = new Projectile();
+		AddProjectile(projectile);
+		projectile->Load();
+		projectile->Initialize((dstrect.x + imageWidth /2), dstrect.y);
+	}
+
+	++frameCount;
+}
+
+void Player::AddProjectile(Projectile* _projectile)
+{
+	projectiles.push_back(_projectile);
 }
 
 void Player::Render()
@@ -92,18 +125,13 @@ void Player::Render()
 	}
 
 	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);  //Render the player
+
 }
 
 //SDL_Rect Player::GetPosition()
 //{
 //	return SDL_Rect{ moveX, moveY, imageWidth, imageHeight };
 //}
-
-//char* Player::GetImagePath()
-//{
-//	return (char*)imagePath.c_str();
-//}
-
 
 void Player::Load(json::JSON& _json)  //Load player data from json file
 {
@@ -114,31 +142,26 @@ void Player::Load(json::JSON& _json)  //Load player data from json file
 		if (playerData.hasKey("lives"))
 		{
 			lives = playerData["lives"].ToInt();  //Load the player lives
-			std::cout << "Player Lives: " << lives << std::endl;
 		}
 
 		if (playerData.hasKey("speed"))
 		{
 			speed = playerData["speed"].ToInt();  //Load the player speed
-			std::cout << "Player Speed: " << speed << std::endl;
 		}
 
 		if (playerData.hasKey("imagePath"))
 		{
 			imagePath = playerData["imagePath"].ToString();  //Load the player image path
-			std::cout << "Player Image Path: " << imagePath << std::endl;
 		}
 
 		if (playerData.hasKey("imageWidth"))
 		{
 			imageWidth = playerData["imageWidth"].ToInt();  //Load the player image width
-			std::cout << "Player Image Width: " << imageWidth << std::endl;
 		}
 
 		if (playerData.hasKey("imageHeight"))
 		{
 			imageHeight = playerData["imageHeight"].ToInt();  //Load the player image height
-			std::cout << "Player Image Height: " << imageHeight << std::endl;
 		}
 	}
 

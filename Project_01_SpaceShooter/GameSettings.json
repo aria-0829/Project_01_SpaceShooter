@@ -24,5 +24,12 @@
         "imageWidth": 48,
         "imageHeight": 48
     }
+  },
+  "Background": {
+    "scrollSpeed": 2,
+    "imagePath": "Resources/Background/starBackground.png",
+    "imageWidth": 256,
+    "imageHeight": 256
   }
+  
 }
