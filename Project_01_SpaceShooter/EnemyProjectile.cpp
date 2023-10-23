@@ -4,12 +4,12 @@
 
 EnemyProjectile::EnemyProjectile()
 {
-	std::cout << "EnemyProjectile Created" << std::endl;
+	//std::cout << "EnemyProjectile Created" << std::endl;
 }
 
 EnemyProjectile::~EnemyProjectile()
 {
-	std::cout << "EnemyProjectile Deleted" << std::endl;
+	//std::cout << "EnemyProjectile Deleted" << std::endl;
 }
 
 void EnemyProjectile::Initialize(int posX, int posY)
@@ -21,13 +21,15 @@ void EnemyProjectile::Initialize(int posX, int posY)
 void EnemyProjectile::Update()
 {
 	dstrect.y += speed;
+
+	collisionCircle = { dstrect.x, dstrect.y, dstrect.h / 2 }; //Update collision circle
 }
 
 void EnemyProjectile::Destroy()
 {
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	std::cout << "EnemyProjectile Destroyed" << std::endl;
+	//std::cout << "EnemyProjectile Destroyed" << std::endl;
 }
 
 void EnemyProjectile::Render()

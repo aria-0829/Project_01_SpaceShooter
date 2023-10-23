@@ -6,6 +6,7 @@
 #include "json.hpp"
 #include <fstream>
 #include "SDL.h"
+#include "Circle.h"
 
 class EnemyProjectile
 {
@@ -16,6 +17,7 @@ private:
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
+	Circle collisionCircle = { 0, 0, 0 };
 
 public:
 	EnemyProjectile();
@@ -27,6 +29,7 @@ public:
 	void Render();
 	void Load();
 	int GetPositionY() { return dstrect.y; }
+	Circle GetCollisionCircle() { return collisionCircle; }
 };
 
 #endif // !_ENEMY_PROJECTILE_H_

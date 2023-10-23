@@ -51,6 +51,7 @@ public:
 	Player* GetPlayer() { return player; }
 	void Destroy();
 	void Load(json::JSON& _json);
+	void CheckCollisions();
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	SDL_Renderer* GetRenderer() { return renderer; }

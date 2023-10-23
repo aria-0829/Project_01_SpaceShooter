@@ -53,18 +53,15 @@ void Star::Load(json::JSON& _json)
 	if (_json.hasKey("imagePath"))
 	{
 		imagePath = _json["imagePath"].ToString();  //Load image path
-		std::cout << "imagePath: " << imagePath << std::endl;
 	}
 
 	if (_json.hasKey("imageWidth"))
 	{
 		imageWidth = _json["imageWidth"].ToInt();  //Load image width
-		std::cout << "imageWidth: " << imageWidth << std::endl;
 	}
 
 	if (_json.hasKey("imageHeight"))
 	{
 		imageHeight = _json["imageHeight"].ToInt();  //Load image height
-		std::cout << "imageHeight: " << imageHeight << std::endl;
 	}
 }

@@ -22,7 +22,7 @@ void EnemyUFO::Initialize()
 	//Generate a random start height
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(0, (Renderer::Instance().GetHeight() - imageHeight * 2));
+	std::uniform_real_distribution<float> dis(0, (Renderer::Instance().GetHeight() - imageHeight * 3)); //Reseve 3 times the height as space for player
 	dstrect.y = dis(gen);
 
 	//Generate a random initial direction
@@ -66,6 +66,8 @@ void EnemyUFO::Update()
 
 void EnemyUFO::Destroy()
 {
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
 	std::cout << "EnemyUFO Destroyed" << std::endl;
 }
 

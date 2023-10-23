@@ -1,6 +1,7 @@
 #include "EnemyShip.h".
 #include "Renderer.h"
 #include "AssetManager.h"
+#include "CollisionDetection.h"
 #include <random>
 
 EnemyShip::EnemyShip()
@@ -55,6 +56,19 @@ void EnemyShip::Update()
 				delete projectile;
 				return true; //Remove the projectile
 			}
+
+			//Get the collision circles
+			Circle projectileCollider = projectile->GetCollisionCircle();
+			Circle playerCollider = Renderer::Instance().GetPlayer()->GetCollisionCircle();
+
+			//Check if the projectile collides with the player
+			if (CollisionDetection::Instance().CheckCollision(playerCollider, projectileCollider))
+			{
+				Renderer::Instance().GetPlayer()->Damaged();
+				projectile->Destroy();
+				delete projectile;
+				return true; //Remove the projectile
+			}
 			return false; //Keep the projectile
 		});
 
@@ -70,6 +84,8 @@ void EnemyShip::Destroy()
 	}
 	enemyProjectiles.clear();
 
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
 	std::cout << "EnemyShip Destroyed" << std::endl;
 }
 
