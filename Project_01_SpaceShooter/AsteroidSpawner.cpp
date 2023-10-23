@@ -46,6 +46,25 @@ void AsteroidSpawner::Update()
 
 		return false; //Keep the asteroid
 	});
+
+	SpawnStars();
+
+	//Update and render stars
+	stars.remove_if([](Star* star)
+		{
+			star->Update();
+			star->Render();
+
+			//Check if the star is out of the window
+			if (star->GetPositionY() > Renderer::Instance().GetHeight())
+			{
+				star->Destroy();
+				delete star;
+				return true; //Remove the star
+			}
+			return false; //Keep the star
+		});
+
 }
 
 void AsteroidSpawner::Destroy()
@@ -57,6 +76,14 @@ void AsteroidSpawner::Destroy()
 		delete asteroid;
 	}
 	asteroids.clear();
+
+	//Destroy stars
+	for (auto star : stars)
+	{
+		star->Destroy();
+		delete star;
+	}
+	stars.clear();
 
 	std::cout << "Asteroid Spawner Destroyed" << std::endl;
 }
@@ -82,6 +109,22 @@ void AsteroidSpawner::AddAsteroid(Asteroid* _asteroid)
 	asteroids.push_back(_asteroid);
 }
 
+void AsteroidSpawner::SpawnStars()
+{
+	static int frameCount = 0;
+	const int spawnInterval = 30;
+
+	if (frameCount % spawnInterval == 0)
+	{
+		Star* star = new Star();
+		stars.push_back(star);
+		star->Load(starData);
+		star->Initialize();
+	}
+
+	++frameCount;
+}
+
 void AsteroidSpawner::Load()
 {
 	std::ifstream inputStream("Data/Asteroid.json");
@@ -91,6 +134,15 @@ void AsteroidSpawner::Load()
 	if (documentData.hasKey("Asteroid"))
 	{
 		asteroidData = documentData["Asteroid"];
+	}
+
+	std::ifstream inputStreamStar("Data/Star.json");
+	std::string strStar((std::istreambuf_iterator<char>(inputStreamStar)), std::istreambuf_iterator<char>());
+	json::JSON documentDataStar = json::JSON::Load(strStar);
+
+	if (documentDataStar.hasKey("Star"))
+	{
+		starData = documentDataStar["Star"];
 	}
 }
 

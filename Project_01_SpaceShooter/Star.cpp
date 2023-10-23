@@ -1,27 +1,24 @@
-#include "Asteroid.h"
-#include "AssetManager.h"
+#include "Star.h"
 #include "Renderer.h"
-#include "CollisionDetection.h"
+#include "AssetManager.h"
 #include <random>
 
-Asteroid::Asteroid()
+Star::Star()
 {
-	std::cout << "Asteroid Created" << std::endl;
 }
 
-Asteroid::~Asteroid()
+Star::~Star()
 {
-	std::cout << "Asteroid Deleted" << std::endl;
 }
 
-void Asteroid::Initialize()
+void Star::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
-
+	
 	//Generate a random scale
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> scaleDis(0.5f, 1.5f);
+	std::uniform_real_distribution<float> scaleDis(0.5f, 2.0f);
 	float scale = scaleDis(gen);
 
 	//Generate a random start position
@@ -29,48 +26,45 @@ void Asteroid::Initialize()
 	int posX = posDis(gen);
 
 	dstrect = { posX, -imageHeight, static_cast<int>(imageWidth * scale), static_cast<int>(imageHeight * scale) };  //Coming from top
+
+	//Generate a random speed
+	std::uniform_real_distribution<float> speedDis(1.5, 3);
+	speed = speedDis(gen);
 }
 
-void Asteroid::Update()
+void Star::Update()
 {
 	dstrect.y += speed; //Move down
-
-	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
 }
 
-void Asteroid::Destroy()
+void Star::Destroy()
 {
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	std::cout << "Asteroid Destroyed" << std::endl;
 }
 
-void Asteroid::Render()
+void Star::Render()
 {
 	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
-void Asteroid::Load(json::JSON& _json)
+void Star::Load(json::JSON& _json)
 {
-	if (_json.hasKey("speed"))
-	{
-		speed = _json["speed"].ToInt();  //Load speed
-	}
-
 	if (_json.hasKey("imagePath"))
 	{
 		imagePath = _json["imagePath"].ToString();  //Load image path
+		std::cout << "imagePath: " << imagePath << std::endl;
 	}
 
 	if (_json.hasKey("imageWidth"))
 	{
 		imageWidth = _json["imageWidth"].ToInt();  //Load image width
+		std::cout << "imageWidth: " << imageWidth << std::endl;
 	}
 
 	if (_json.hasKey("imageHeight"))
 	{
 		imageHeight = _json["imageHeight"].ToInt();  //Load image height
+		std::cout << "imageHeight: " << imageHeight << std::endl;
 	}
-	
-	std::cout << "Asteroid Loaded" << std::endl;
 }

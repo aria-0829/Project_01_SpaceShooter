@@ -8,12 +8,15 @@
 #include "json.hpp"
 #include <fstream>
 #include <list>
+#include "Star.h"
 
 class AsteroidSpawner
 {
 private:
 	std::list<Asteroid*> asteroids;
 	json::JSON asteroidData;
+	std::list<Star*> stars;
+	json::JSON starData;
 	//int spawnRate = 0;
 	//int spawnTimer = 0;
 
@@ -26,6 +29,7 @@ public:
 	void Destroy();
 	void SpawnAsteroids();
 	void AddAsteroid(Asteroid* _asteroid);
+	void SpawnStars();
 	void Load();
 };
 

@@ -13,7 +13,7 @@
   },
   "Background": {
     "scrollSpeed": 2,
-    "imagePath": "Resources/Background/starBackground.png",
+    "imagePath": "Resources/Background/backgroundColor.png",
     "imageWidth": 256,
     "imageHeight": 256
   }

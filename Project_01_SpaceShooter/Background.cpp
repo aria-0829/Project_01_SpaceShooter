@@ -26,6 +26,7 @@ void Background::Initialize(int posY)
 
 void Background::Update()
 {
+	//Move back again when out of window
 	dstrect.y += scrollSpeed;
 	if (dstrect.y >= Renderer::Instance().GetHeight())
 	{
