@@ -76,8 +76,42 @@ void Renderer::Update()
 
 	enemySpawner->Update();
 
+	CheckCollisions();
+
 	SDL_RenderPresent(renderer);
 }
+
+void Renderer::CheckCollisions()
+{ 
+	 //Iterate over projectiles of player
+	 for (const auto& projectile : player->GetProjectiles()) 
+	 {
+		 //Iterate over enemyUFO of enemySpawner
+		 for (const auto& enemyUFO : enemySpawner->GetUFOs())
+		 {
+			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), enemyUFO->GetCollisionCircle()))
+			{
+				enemyUFO->Destroy();
+				delete enemyUFO;
+				projectile->Destroy();
+				delete projectile;
+			}
+		 }
+
+		 //Iterate over enemyShip of enemySpawner
+		 for (const auto& enemyShip : enemySpawner->GetShips())
+		 {
+			 if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), enemyShip->GetCollisionCircle()))
+			 {
+				 enemyShip->Destroy();
+				 delete enemyShip;
+				 projectile->Destroy();
+				 delete projectile;
+			 }
+		 }
+	}
+}
+
 
 void Renderer::Destroy()
 {

@@ -40,9 +40,8 @@ public:
 	void Shoot();
 	void AddProjectile(Projectile* _projectile);
 	Circle GetCollisionCircle() { return collisionCircle; }
+	std::list<Projectile*> GetProjectiles() { return projectiles; }
 	void Damaged();
-	//SDL_Rect GetPosition();
-	//char* GetImagePath();
 };
 #endif // !_PLAYER_H_
 

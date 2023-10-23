@@ -32,6 +32,8 @@ public:
 	void AddShip(EnemyShip* _enemy);
 	void AddUFO(EnemyUFO* _enemy);
 	void Load();
+	std::list<EnemyUFO*> GetUFOs() { return ufos; }
+	std::list<EnemyShip*> GetShips() { return ships; }
 };
 
 #endif // !_ENEMY_SPAWNER_H_

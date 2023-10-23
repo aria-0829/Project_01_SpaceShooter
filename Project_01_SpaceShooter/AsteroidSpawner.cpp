@@ -44,6 +44,19 @@ void AsteroidSpawner::Update()
 			return true; //Remove the asteroid
 		}
 
+		//Check if the asteroid collides with the player's projectiles
+		for (const auto& projectile : Renderer::Instance().GetPlayer()->GetProjectiles())
+		{
+			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), asteroidCollider))
+			{
+				projectile->Destroy();
+				delete projectile; 
+				asteroid->Destroy();
+				delete asteroid;
+				return true; //Remove the asteroid
+			}
+		}
+
 		return false; //Keep the asteroid
 	});
 
