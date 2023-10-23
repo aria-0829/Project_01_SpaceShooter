@@ -21,14 +21,12 @@ private:
 
 public:
 	Enemy();
-	~Enemy();
-
-	void Initialize();
-	void Update();
-	void Destroy();
-	void Render();
+	virtual ~Enemy() = default;
+	virtual void Initialize() = 0;
+	virtual void Update() = 0;
+	virtual void Destroy() = 0;
+	virtual void Render() = 0;
 	int GetPositionY() { return dstrect.y; }
-
 };
 #endif // !_ENEMY_H_
 

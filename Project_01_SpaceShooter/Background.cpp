@@ -20,8 +20,6 @@ void Background::Initialize(int posY)
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
 	
 	dstrect = { 0, posY, windowWidth, windowHeight }; //Background starting position
-
-	std::cout << "Background Initialized" << std::endl;
 }
 
 void Background::Update()
@@ -36,7 +34,6 @@ void Background::Update()
 
 void Background::Destroy()
 {
-	std::cout << "Background Destroyed" << std::endl;
 }
 
 void Background::Render()
@@ -60,6 +57,4 @@ void Background::Load(json::JSON& _json)
 			imagePath = backgroundSettings["imagePath"].ToString(); //Load image path
 		}
 	}
-
-	std::cout << "Background Loaded" << std::endl;
 }

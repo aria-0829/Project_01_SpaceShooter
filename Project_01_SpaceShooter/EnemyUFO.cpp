@@ -68,7 +68,6 @@ void EnemyUFO::Destroy()
 {
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	std::cout << "EnemyUFO Destroyed" << std::endl;
 }
 
 void EnemyUFO::Render()
@@ -102,6 +101,4 @@ void EnemyUFO::Load(json::JSON& _json)
 			imageHeight = ufoData["imageHeight"].ToInt();  //Load image height
 		}
 	}
-
-	std::cout << "EnemyUFO Loaded" << std::endl;
 }

@@ -16,6 +16,6 @@ void UI::Destroy()
 {
 }
 
-void UI::Load(json::JSON& _json)
-{
-}
+//void UI::Load(json::JSON& _json)
+//{
+//}

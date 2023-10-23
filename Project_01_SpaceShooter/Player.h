@@ -38,10 +38,12 @@ public:
 	void Render();
 	void Load(json::JSON& _json);
 	void Shoot();
-	void AddProjectile(Projectile* _projectile);
+	void Damaged();
+	void AddProjectile(Projectile* _projectile) { projectiles.push_back(_projectile); }
+	void RemoveProjectile(Projectile* projectile) { projectiles.remove(projectile); }
 	Circle GetCollisionCircle() { return collisionCircle; }
 	std::list<Projectile*> GetProjectiles() { return projectiles; }
-	void Damaged();
+
 };
 #endif // !_PLAYER_H_
 

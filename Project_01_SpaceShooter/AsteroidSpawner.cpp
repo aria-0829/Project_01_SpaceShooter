@@ -49,8 +49,10 @@ void AsteroidSpawner::Update()
 		{
 			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), asteroidCollider))
 			{
+				Renderer::Instance().GetPlayer()->RemoveProjectile(projectile);
 				projectile->Destroy();
-				delete projectile; 
+				delete projectile; //Remove the projectile
+
 				asteroid->Destroy();
 				delete asteroid;
 				return true; //Remove the asteroid
@@ -97,8 +99,6 @@ void AsteroidSpawner::Destroy()
 		delete star;
 	}
 	stars.clear();
-
-	std::cout << "Asteroid Spawner Destroyed" << std::endl;
 }
 
 void AsteroidSpawner::SpawnAsteroids()

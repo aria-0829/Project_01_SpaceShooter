@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "AssetManager.h"
 #include "GameTime.h"
+#include "Game.h"
 
 Player::Player()
 {
@@ -20,28 +21,26 @@ void Player::Initialize()
 
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
 	dstrect = { windowWidth / 2, (windowHeight - imageHeight), imageWidth, imageHeight};  //Player starting position at the bottom middle of the window
-
-	std::cout << "Player Initialized" << std::endl;
 }
 
 void Player::Update()
 {
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-	//GameTime& gameTime = GameTime::Instance();
-	//float deltaTime = gameTime.DeltaTime();
+	GameTime& gameTime = GameTime::Instance();
+	float deltaTime = gameTime.DeltaTime();
 
 	if (currentKeyStates[SDL_SCANCODE_W]) {
-		moveY -= speed;// *GameTime::Instance().DeltaTime();
+		moveY -= speed;
 	}
 	if (currentKeyStates[SDL_SCANCODE_A]) {
-		moveX -= speed;// *GameTime::Instance().DeltaTime();
+		moveX -= speed;
 	}
 	if (currentKeyStates[SDL_SCANCODE_S]) {
-		moveY += speed;// *GameTime::Instance().DeltaTime();
+		moveY += speed;
 	}
 	if (currentKeyStates[SDL_SCANCODE_D]) {
-		moveX += speed;// *GameTime::Instance().DeltaTime();
+		moveX += speed;
 	}
 	if (currentKeyStates[SDL_SCANCODE_SPACE]) {
 		Shoot();
@@ -62,6 +61,12 @@ void Player::Update()
 		}
 		return false; //Keep the projectile
 	});
+
+	if (lives <= 0)
+	{
+		Destroy();
+		//Game::Instance().setGameRunning(false);
+	}
 }
 
 void Player::Destroy()
@@ -70,11 +75,11 @@ void Player::Destroy()
 	{
 		projectile->Destroy();
 		delete projectile;
-		projectile = nullptr; //?
 	}
 	projectiles.clear();
 
-	std::cout << "Player Destroyed" << std::endl;
+	SDL_DestroyTexture(tex);
+	tex = nullptr;
 }
 
 
@@ -92,11 +97,6 @@ void Player::Shoot()
 	}
 
 	++frameCount;
-}
-
-void Player::AddProjectile(Projectile* _projectile)
-{
-	projectiles.push_back(_projectile);
 }
 
 void Player::Damaged()
@@ -134,7 +134,6 @@ void Player::Render()
 	collisionCircle = { dstrect.x, dstrect.y, imageWidth / 2 };
 
 	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);  //Render the player
-
 }
 
 void Player::Load(json::JSON& _json)  //Load player data from json file
@@ -168,6 +167,4 @@ void Player::Load(json::JSON& _json)  //Load player data from json file
 			imageHeight = playerData["imageHeight"].ToInt();  //Load the player image height
 		}
 	}
-
-	std::cout << "Player Load Complete." << std::endl << std::endl;
 }

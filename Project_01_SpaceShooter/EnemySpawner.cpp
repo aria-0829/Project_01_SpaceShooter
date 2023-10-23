@@ -119,16 +119,6 @@ void EnemySpawner::Destroy()
 
 }
 
-void EnemySpawner::AddShip(EnemyShip* _enemy)
-{
-	ships.push_back(_enemy);
-}
-
-void EnemySpawner::AddUFO(EnemyUFO* _enemy)
-{
-	ufos.push_back(_enemy);
-}
-
 void EnemySpawner::Load()
 {
 	std::ifstream inputStream("Data/Enemies.json");

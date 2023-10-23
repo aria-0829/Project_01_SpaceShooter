@@ -42,7 +42,6 @@ void Asteroid::Destroy()
 {
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	std::cout << "Asteroid Destroyed" << std::endl;
 }
 
 void Asteroid::Render()
@@ -71,6 +70,4 @@ void Asteroid::Load(json::JSON& _json)
 	{
 		imageHeight = _json["imageHeight"].ToInt();  //Load image height
 	}
-	
-	std::cout << "Asteroid Loaded" << std::endl;
 }

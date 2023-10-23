@@ -12,8 +12,6 @@ class Game
 private:
 	static Game* instance;
 
-	//AssetManager* assetManager = nullptr;
-	//Renderer* renderer = nullptr;
 	bool isRunning = true;
 
 	inline explicit Game() = default;
@@ -32,8 +30,8 @@ public:
 	}
 
 	void Initialize();
-	void Destroy();
 	void Update();
+	void Destroy();
 	void Load(json::JSON& _json);
 	void Save();
 	bool GameRunning() { return isRunning; }

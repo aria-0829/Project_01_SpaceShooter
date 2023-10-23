@@ -14,8 +14,6 @@ void Renderer::Initialize()
 	background1->Initialize(0);
 	background2->Initialize(-height);
 	player->Initialize();
-	//asteroidSpawner->Initialize();
-	//enemySpawner->Initialize();
 
 	std::cout << "Renderer Initialized" << std::endl;
 }
@@ -44,19 +42,8 @@ void Renderer::Update()
 		{
 			if (event.key.keysym.sym == SDLK_ESCAPE)
 			{
-				Game::Instance().setGameRunning(false);
+				//Game::Instance().setGameRunning(false);
 
-				std::cout << "Would you like to save?" << std::endl;
-				std::cout << "Press 'K' to save the game progress or 'L' to load a file: " << std::endl;
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_k:
-					std::cout << "Game progress saving" << std::endl;
-					break;
-				case SDLK_l:
-					std::cout << "Game progress loading" << std::endl;
-					break;
-				}
 			}
 		}
 	}
@@ -83,6 +70,8 @@ void Renderer::Update()
 
 void Renderer::CheckCollisions()
 { 
+	 std::list<Projectile*> projectilesToRemove;
+
 	 //Iterate over projectiles of player
 	 for (const auto& projectile : player->GetProjectiles()) 
 	 {
@@ -91,8 +80,11 @@ void Renderer::CheckCollisions()
 		 {
 			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), enemyUFO->GetCollisionCircle()))
 			{
+				enemySpawner->RemoveUFO(enemyUFO);
 				enemyUFO->Destroy();
 				delete enemyUFO;
+
+				player->RemoveProjectile(projectile);
 				projectile->Destroy();
 				delete projectile;
 			}
@@ -103,13 +95,21 @@ void Renderer::CheckCollisions()
 		 {
 			 if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), enemyShip->GetCollisionCircle()))
 			 {
+				 enemySpawner->RemoveShip(enemyShip);
 				 enemyShip->Destroy();
 				 delete enemyShip;
+
+				 player->RemoveProjectile(projectile);
 				 projectile->Destroy();
 				 delete projectile;
 			 }
 		 }
 	}
+	 for (auto projectile : projectilesToRemove)
+	 {
+		 player->RemoveProjectile(projectile);
+		 delete projectile;
+	 }
 }
 
 
@@ -187,7 +187,5 @@ void Renderer::Load(json::JSON& _json)
 	enemySpawner->Load();
 
 	ui = new UI();
-	
-	std::cout << "Renderer Loaded" << std::endl;
 }
 

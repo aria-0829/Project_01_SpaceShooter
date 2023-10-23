@@ -17,14 +17,11 @@ private:
 	json::JSON asteroidData;
 	std::list<Star*> stars;
 	json::JSON starData;
-	//int spawnRate = 0;
-	//int spawnTimer = 0;
 
 public:
 	AsteroidSpawner();
 	~AsteroidSpawner();
 
-	//void Initialize();
 	void Update();
 	void Destroy();
 	void SpawnAsteroids();

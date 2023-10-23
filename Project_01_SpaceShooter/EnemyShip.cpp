@@ -86,7 +86,6 @@ void EnemyShip::Destroy()
 
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	std::cout << "EnemyShip Destroyed" << std::endl;
 }
 
 void EnemyShip::Render()
@@ -120,6 +119,4 @@ void EnemyShip::Load(json::JSON& _json)
 			imageHeight = shipData["imageHeight"].ToInt();  //Load image height
 		}
 	}
-
-	std::cout << "EnemyShip Loaded" << std::endl;
 }

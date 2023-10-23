@@ -24,11 +24,8 @@ void Game::Update()
 {
 	while (isRunning)
 	{
-		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
 		GameTime::Instance().Update();
 		Renderer::Instance().Update();
-
 	}
 }
 
@@ -45,9 +42,8 @@ void Game::Destroy()
 
 void Game::Load(json::JSON& _json)
 {
-	
+	std::cout << "Game Loading..." << std::endl << std::endl;
 
-	std::cout << "Game Data Load Complete" << std::endl << std::endl;
 }
 
 void Game::Save()

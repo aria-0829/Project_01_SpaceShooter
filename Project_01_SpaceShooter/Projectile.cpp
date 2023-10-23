@@ -29,7 +29,6 @@ void Projectile::Destroy()
 {
 	SDL_DestroyTexture(tex);
 	tex = nullptr;
-	//std::cout << "Projectile Destroyed" << std::endl;
 }
 
 void Projectile::Render()
