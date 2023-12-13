@@ -1,15 +1,5 @@
 #include "GameCore.h"
 
-Background::Background()
-{
-	std::cout << "Background Created" << std::endl;
-}
-
-Background::~Background()
-{
-	std::cout << "Background Deleted" << std::endl;
-}
-
 void Background::Initialize(int posY)
 {
 	int windowWidth = RenderSystem::Instance().GetWidth();
@@ -23,20 +13,11 @@ void Background::Initialize(int posY)
 void Background::Update()
 {
 	//Move back again when out of window
-	dstrect.y += scrollSpeed;
+	dstrect.y += speed;
 	if (dstrect.y >= RenderSystem::Instance().GetHeight())
 	{
 		dstrect.y = -RenderSystem::Instance().GetHeight();
 	}
-}
-
-void Background::Destroy()
-{
-}
-
-void Background::Render()
-{
-	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Background::Load(json::JSON& _json)
@@ -45,9 +26,9 @@ void Background::Load(json::JSON& _json)
 	{
 		json::JSON backgroundSettings = _json["Background"];
 
-		if (backgroundSettings.hasKey("scrollSpeed"))
+		if (backgroundSettings.hasKey("speed"))
 		{
-			scrollSpeed = backgroundSettings["scrollSpeed"].ToInt(); //Load scroll speed
+			speed = backgroundSettings["speed"].ToInt(); //Load scroll speed
 		}
 
 		if (backgroundSettings.hasKey("imagePath"))

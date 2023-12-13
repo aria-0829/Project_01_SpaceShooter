@@ -2,10 +2,10 @@
 
 IRenderable::IRenderable()
 {
-	RenderSystem::Instance().AddIRenderable(this);
+	//RenderSystem::Instance().AddIRenderable(this);
 }
 
 IRenderable::~IRenderable()
 {
-	RenderSystem::Instance().RemoveIRenderable(this);
+	//RenderSystem::Instance().RemoveIRenderable(this);
 }

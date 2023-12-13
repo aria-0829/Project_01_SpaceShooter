@@ -45,10 +45,6 @@ void Scene::Destroy()
 	//Destroy asteroidSpawner
 	asteroidSpawner->Destroy();
 	delete asteroidSpawner;
-
-	//Destroy UI
-	ui->Destroy();
-	delete ui;
 }
 
 void Scene::Load(json::JSON& _json)
@@ -63,11 +59,15 @@ void Scene::Load(json::JSON& _json)
 
 		background1 = new Background();
 		background1->Load(sceneData);
+		AddEntity(background1);
+
 		background2 = new Background();
 		background2->Load(sceneData);
+		AddEntity(background2);
 
 		player = new Player();
 		player->Load(sceneData);
+		AddEntity(player);
 
 		asteroidSpawner = new AsteroidSpawner();
 		asteroidSpawner->Load(sceneData);
@@ -75,7 +75,6 @@ void Scene::Load(json::JSON& _json)
 		enemySpawner = new EnemySpawner();
 		enemySpawner->Load(sceneData);
 	}
-	ui = new UI();
 }
 
 void Scene::CheckCollisions()
@@ -122,3 +121,9 @@ void Scene::CheckCollisions()
 	}
 }
 
+void Scene::AddEntity(Entity* _entity)
+{
+	entities.push_back(*_entity);
+	RenderSystem::Instance().AddIRenderable(_entity);
+	std::cout << "Added entity" << std::endl;
+}

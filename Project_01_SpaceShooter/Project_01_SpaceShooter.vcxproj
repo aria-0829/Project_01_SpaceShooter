@@ -156,7 +156,6 @@
     <ClCompile Include="AsteroidSpawner.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
@@ -172,7 +171,6 @@
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Star.cpp" />
-    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
@@ -181,7 +179,6 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="CollisionDetection.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="EnemySpawner.h" />
@@ -198,7 +195,6 @@
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Star.h" />
-    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\GameSettings.json" />

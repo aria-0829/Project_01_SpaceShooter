@@ -35,5 +35,4 @@
 #include "Circle.h"
 #include "Entity.h"
 #include "GameTime.h"
-#include "UI.h"
 //#include "GameEngine.h"

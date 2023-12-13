@@ -13,7 +13,8 @@ class Scene
 private:
 	static Scene* instance;
 
-	UI* ui = nullptr;
+	std::list<Entity> entities;
+
 	Background* background1 = nullptr;
 	Background* background2 = nullptr;
 	Player* player = nullptr;
@@ -41,5 +42,6 @@ public:
 	void Load(json::JSON& _json);
 	Player* GetPlayer() { return player; }
 	void CheckCollisions();
+	void AddEntity(Entity* _entity);
 };
 #endif // !_SCENE_H_

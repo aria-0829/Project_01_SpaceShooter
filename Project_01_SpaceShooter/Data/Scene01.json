@@ -1,6 +1,6 @@
 {
   "Background": {
-    "scrollSpeed": 2,
+    "speed": 2,
     "imagePath": "Resources/Background/backgroundColor.png",
     "imageWidth": 256,
     "imageHeight": 256

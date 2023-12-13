@@ -1,13 +1,5 @@
 #include "GameCore.h"
 
-Star::Star()
-{
-}
-
-Star::~Star()
-{
-}
-
 void Star::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
@@ -32,17 +24,6 @@ void Star::Initialize()
 void Star::Update()
 {
 	dstrect.y += speed; //Move down
-}
-
-void Star::Destroy()
-{
-	SDL_DestroyTexture(tex);
-	tex = nullptr;
-}
-
-void Star::Render()
-{
-	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Star::Load(json::JSON& _json)

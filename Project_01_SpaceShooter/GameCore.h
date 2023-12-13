@@ -11,7 +11,6 @@
 #include "EnemySpawner.h"
 #include "EnemyUFO.h"
 #include "EnemyShip.h"
-#include "Enemy.h"
 #include "EnemyProjectile.h"
 
 #include "AsteroidSpawner.h"

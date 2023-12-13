@@ -1,15 +1,5 @@
 #include "GameCore.h"
 
-Asteroid::Asteroid()
-{
-	std::cout << "Asteroid Created" << std::endl;
-}
-
-Asteroid::~Asteroid()
-{
-	std::cout << "Asteroid Deleted" << std::endl;
-}
-
 void Asteroid::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
@@ -29,20 +19,9 @@ void Asteroid::Initialize()
 
 void Asteroid::Update()
 {
+	Entity::Update();
+
 	dstrect.y += speed; //Move down
-
-	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
-}
-
-void Asteroid::Destroy()
-{
-	SDL_DestroyTexture(tex);
-	tex = nullptr;
-}
-
-void Asteroid::Render()
-{
-	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Asteroid::Load(json::JSON& _json)

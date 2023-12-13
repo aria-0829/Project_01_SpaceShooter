@@ -2,29 +2,19 @@
 #ifndef _STAR_H_
 #define _STAR_H_
 
-class Star
+#include "Entity.h"
+#include "IRenderable.h"
+
+class Star : public Entity, public IRenderable
 {
-private:
-	int speed = 0;
-	int imageWidth = 0;
-	int imageHeight = 0;
-	std::string imagePath = "";
-	SDL_Texture* tex = nullptr;
-	SDL_Rect dstrect = { 0, 0, 0, 0 };
 
 public:
-	Star();
-	~Star();
+	Star() = default;
+	~Star() override = default;
 
 	void Initialize();
 	void Update();
-	void Destroy();
-	void Render();
 	void Load(json::JSON& _json);
-	int GetPositionY() { return dstrect.y; }
 };
 
-
 #endif // !_STAR_H_
-
-

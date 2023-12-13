@@ -1,15 +1,5 @@
 #include "GameCore.h"
 
-EnemyUFO::EnemyUFO()
-{
-	std::cout << "EnemyUFO Created" << std::endl;
-}
-
-EnemyUFO::~EnemyUFO()
-{
-	std::cout << "EnemyUFO Deleted" << std::endl;
-}
-
 void EnemyUFO::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load enemy tex
@@ -41,6 +31,8 @@ void EnemyUFO::Initialize()
 
 void EnemyUFO::Update()
 {
+	Entity::Update();
+
 	if (direction == 1)
 	{
 		//Moving from left to right
@@ -57,19 +49,6 @@ void EnemyUFO::Update()
 	{
 		direction *= -1;
 	}
-
-	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
-}
-
-void EnemyUFO::Destroy()
-{
-	SDL_DestroyTexture(tex);
-	tex = nullptr;
-}
-
-void EnemyUFO::Render()
-{
-	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void EnemyUFO::Load(json::JSON& _json)
