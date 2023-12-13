@@ -55,12 +55,12 @@ void EnemyShip::Update()
 
 			//Get the collision circles
 			Circle projectileCollider = projectile->GetCollisionCircle();
-			Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
+			Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
 
 			//Check if the projectile collides with the player
 			if (CollisionDetection::Instance().CheckCollision(playerCollider, projectileCollider))
 			{
-				RenderSystem::Instance().GetPlayer()->Damaged();
+				Game::Instance().GetPlayer()->Damaged();
 				projectile->Destroy();
 				delete projectile;
 				return true; //Remove the projectile

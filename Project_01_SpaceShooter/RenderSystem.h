@@ -2,12 +2,6 @@
 #ifndef _RENDER_SYSTEM_H_
 #define _RENDER_SYSTEM_H_
 
-class UI;
-class Background;
-class Player;
-class EnemySpawner;
-class AsteroidSpawner;
-
 class RenderSystem
 {
 private:
@@ -18,12 +12,6 @@ private:
 	bool fullscreen = false;
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
-	UI* ui = nullptr;
-	Background* background1 = nullptr;
-	Background* background2 = nullptr;
-	Player* player = nullptr;
-	EnemySpawner* enemySpawner = nullptr;
-	AsteroidSpawner* asteroidSpawner = nullptr;
 
 	inline explicit RenderSystem() = default;
 	inline ~RenderSystem() = default;
@@ -42,10 +30,8 @@ public:
 
 	void Initialize();
 	void Update();
-	Player* GetPlayer() { return player; }
 	void Destroy();
 	void Load(json::JSON& _json);
-	void CheckCollisions();
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	SDL_Renderer* GetRenderer() { return renderer; }

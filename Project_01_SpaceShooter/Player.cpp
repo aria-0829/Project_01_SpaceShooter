@@ -42,7 +42,6 @@ void Player::Update()
 		Shoot();
 	}
 
-
 	projectiles.remove_if([](Projectile* projectile)
 	{
 		projectile->Update();
@@ -141,6 +140,7 @@ void Player::Load(json::JSON& _json)  //Load player data from json file
 		if (playerData.hasKey("lives"))
 		{
 			lives = playerData["lives"].ToInt();  //Load the player lives
+			std::cout << "Lives: " << lives << std::endl;
 		}
 
 		if (playerData.hasKey("speed"))

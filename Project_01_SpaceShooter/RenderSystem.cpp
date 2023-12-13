@@ -10,9 +10,7 @@ void RenderSystem::Initialize()
 	window = SDL_CreateWindow("Space Shooter", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, fullscreen);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	background1->Initialize(0);
-	background2->Initialize(-height);
-	player->Initialize();
+	Game::Instance().Initialize();
 
 	std::cout << "RenderSystem Initialized" << std::endl;
 }
@@ -23,10 +21,10 @@ void RenderSystem::Update()
 	int frameDelay = 1000 / FPS;
 	Uint32 frameStart = SDL_GetTicks();
 	int frameTime = SDL_GetTicks() - frameStart;
-
+	
 	if (frameDelay > frameTime)
 	{
-		SDL_Delay(frameDelay - frameTime);
+	SDL_Delay(frameDelay - frameTime);
 	}
 
 	SDL_Event event;
@@ -41,7 +39,7 @@ void RenderSystem::Update()
 		{
 			if (event.key.keysym.sym == SDLK_ESCAPE)
 			{
-				//Game::Instance().setGameRunning(false);
+				//GameEngine::Instance().setGameRunning(false);
 
 			}
 		}
@@ -50,96 +48,21 @@ void RenderSystem::Update()
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
-	background1->Update();
-	background1->Render();
-	background2->Update();
-	background2->Render();
-
-	asteroidSpawner->Update();
-
-	player->Update();
-	player->Render();
-
-	enemySpawner->Update();
-
-	CheckCollisions();
+	// Render things here
+	Game::Instance().Update();
+	Game::Instance().GetPlayer()->Render();
 
 	SDL_RenderPresent(renderer);
 }
 
-void RenderSystem::CheckCollisions()
-{ 
-	 std::list<Projectile*> projectilesToRemove;
-
-	 //Iterate over projectiles of player
-	 for (const auto& projectile : player->GetProjectiles()) 
-	 {
-		 //Iterate over enemyUFO of enemySpawner
-		 for (const auto& enemyUFO : enemySpawner->GetUFOs())
-		 {
-			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), enemyUFO->GetCollisionCircle()))
-			{
-				enemySpawner->RemoveUFO(enemyUFO);
-				enemyUFO->Destroy();
-				delete enemyUFO;
-
-				player->RemoveProjectile(projectile);
-				projectile->Destroy();
-				delete projectile;
-			}
-		 }
-
-		 //Iterate over enemyShip of enemySpawner
-		 for (const auto& enemyShip : enemySpawner->GetShips())
-		 {
-			 if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), enemyShip->GetCollisionCircle()))
-			 {
-				 enemySpawner->RemoveShip(enemyShip);
-				 enemyShip->Destroy();
-				 delete enemyShip;
-
-				 player->RemoveProjectile(projectile);
-				 projectile->Destroy();
-				 delete projectile;
-			 }
-		 }
-	}
-	 for (auto projectile : projectilesToRemove)
-	 {
-		 player->RemoveProjectile(projectile);
-		 delete projectile;
-	 }
-}
-
-
 void RenderSystem::Destroy()
 {
-	//Destroy enemySpawner
-	enemySpawner->Destroy();
-	delete enemySpawner;
-
-	//Destroy player
-	player->Destroy();
-	delete player;
-
-	//Destroy background
-	background1->Destroy();
-	delete background1;
-	background2->Destroy();
-	delete background2;
-
-	//Destroy asteroidSpawner
-	asteroidSpawner->Destroy();
-	delete asteroidSpawner;
-
-	//Destroy UI
-	ui->Destroy();
-	delete ui;
-
 	//Destroy window and renderer
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+
+	Game::Instance().Destroy();
 
 	if (instance != nullptr)
 	{
@@ -171,20 +94,10 @@ void RenderSystem::Load(json::JSON& _json)
 		}
 	}
 
-	background1 = new Background();
-	background1->Load(_json);
-	background2 = new Background();
-	background2->Load(_json);
-
-	player = new Player();
-	player->Load(_json);
-
-	asteroidSpawner = new AsteroidSpawner();
-	asteroidSpawner->Load();
-
-	enemySpawner = new EnemySpawner();
-	enemySpawner->Load();
-
-	ui = new UI();
+	if (_json.hasKey("Game"))
+	{
+		json::JSON gameData = _json["Game"];
+		Game::Instance().Load(gameData);
+	}
 }
 

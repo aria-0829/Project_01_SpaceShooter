@@ -21,7 +21,6 @@ public:
 	void Load(json::JSON& _json);
 };
 
-
 #endif // !_BACKGROUND_H_
 
 

@@ -30,12 +30,12 @@ void EnemySpawner::Update()
 
 		//Get the collision circles
 		Circle shipCollider = ship->GetCollisionCircle();
-		Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
+		Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
 
 		//Check if the ship collides with the player
 		if (CollisionDetection::Instance().CheckCollision(playerCollider, shipCollider))
 		{
-			RenderSystem::Instance().GetPlayer()->Damaged();
+			Game::Instance().GetPlayer()->Damaged();
 			ship->Destroy();
 			delete ship;
 			return true; //Remove the ship
@@ -52,12 +52,12 @@ void EnemySpawner::Update()
 
 			//Get the collision circles
 			Circle ufoCollider = ufo->GetCollisionCircle();
-			Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
+			Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
 
 			//Check if the ufo collides with the player
 			if (CollisionDetection::Instance().CheckCollision(playerCollider, ufoCollider))
 			{
-				RenderSystem::Instance().GetPlayer()->Damaged();
+				Game::Instance().GetPlayer()->Damaged();
 				ufo->Destroy();
 				delete ufo;
 				return true; //Remove the ufo
