@@ -1,7 +1,4 @@
-#include "EnemyUFO.h"
-#include "AssetManager.h"
-#include "Renderer.h"
-#include <random>
+#include "GameCore.h"
 
 EnemyUFO::EnemyUFO()
 {
@@ -22,7 +19,7 @@ void EnemyUFO::Initialize()
 	//Generate a random start height
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(0, (Renderer::Instance().GetHeight() - imageHeight * 3)); //Reseve 3 times the height as space for player
+	std::uniform_real_distribution<float> dis(0, (RenderSystem::Instance().GetHeight() - imageHeight * 3)); //Reseve 3 times the height as space for player
 	dstrect.y = dis(gen);
 
 	//Generate a random initial direction
@@ -38,7 +35,7 @@ void EnemyUFO::Initialize()
 	else
 	{
 		//Start from right
-		dstrect.x = Renderer::Instance().GetWidth();
+		dstrect.x = RenderSystem::Instance().GetWidth();
 	}
 }
 
@@ -56,7 +53,7 @@ void EnemyUFO::Update()
 	}
 
 	//Change direction if ufo is out of window
-	if (dstrect.x > Renderer::Instance().GetWidth() || dstrect.x < -imageWidth)
+	if (dstrect.x > RenderSystem::Instance().GetWidth() || dstrect.x < -imageWidth)
 	{
 		direction *= -1;
 	}
@@ -72,7 +69,7 @@ void EnemyUFO::Destroy()
 
 void EnemyUFO::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void EnemyUFO::Load(json::JSON& _json)

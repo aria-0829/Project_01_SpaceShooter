@@ -2,12 +2,6 @@
 #ifndef _PROJECTILE_H_
 #define _PROJECTILE_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-#include "Circle.h"
-
 class Projectile
 {
 private:

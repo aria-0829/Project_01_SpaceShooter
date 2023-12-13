@@ -1,6 +1,4 @@
-#include "EnemyProjectile.h"
-#include "AssetManager.h"
-#include "Renderer.h"
+#include "GameCore.h"
 
 EnemyProjectile::EnemyProjectile()
 {
@@ -33,7 +31,7 @@ void EnemyProjectile::Destroy()
 
 void EnemyProjectile::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void EnemyProjectile::Load()

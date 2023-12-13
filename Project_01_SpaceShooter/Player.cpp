@@ -1,8 +1,4 @@
-#include "Player.h"
-#include "Renderer.h"
-#include "AssetManager.h"
-#include "GameTime.h"
-#include "Game.h"
+#include "GameCore.h"
 
 Player::Player()
 {
@@ -16,8 +12,8 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	windowWidth = Renderer::Instance().GetWidth();
-	windowHeight = Renderer::Instance().GetHeight();
+	windowWidth = RenderSystem::Instance().GetWidth();
+	windowHeight = RenderSystem::Instance().GetHeight();
 
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
 	dstrect = { windowWidth / 2, (windowHeight - imageHeight), imageWidth, imageHeight};  //Player starting position at the bottom middle of the window
@@ -133,7 +129,7 @@ void Player::Render()
 
 	collisionCircle = { dstrect.x, dstrect.y, imageWidth / 2 };
 
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);  //Render the player
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);  //Render the player
 }
 
 void Player::Load(json::JSON& _json)  //Load player data from json file

@@ -1,10 +1,10 @@
-#include "Game.h"
+#include "GameEngine.h"
 
 int main(int argc, char* argv[])
 {
-	Game::Instance().Initialize();
-	Game::Instance().Update();
-	Game::Instance().Destroy();
+	GameEngine::Instance().Initialize();
+	GameEngine::Instance().Update();
+	GameEngine::Instance().Destroy();
 	
 	return 0;
 }

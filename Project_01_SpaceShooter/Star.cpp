@@ -1,7 +1,4 @@
-#include "Star.h"
-#include "Renderer.h"
-#include "AssetManager.h"
-#include <random>
+#include "GameCore.h"
 
 Star::Star()
 {
@@ -22,7 +19,7 @@ void Star::Initialize()
 	float scale = scaleDis(gen);
 
 	//Generate a random start position
-	std::uniform_real_distribution<float> posDis(0, Renderer::Instance().GetWidth());
+	std::uniform_real_distribution<float> posDis(0, RenderSystem::Instance().GetWidth());
 	int posX = posDis(gen);
 
 	dstrect = { posX, -imageHeight, static_cast<int>(imageWidth * scale), static_cast<int>(imageHeight * scale) };  //Coming from top
@@ -45,7 +42,7 @@ void Star::Destroy()
 
 void Star::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Star::Load(json::JSON& _json)

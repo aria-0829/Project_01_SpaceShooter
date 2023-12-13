@@ -2,12 +2,6 @@
 #ifndef _BACKGROUND_H_
 #define _BACKGROUND_H_
 
-#include "SDL.h"
-#include "SDL_image.h"
-#include "json.hpp"
-#include <fstream>
-#include <string>
-
 class Background
 {
 private:

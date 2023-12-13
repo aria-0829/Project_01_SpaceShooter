@@ -2,13 +2,8 @@
 #ifndef _ASTEROID_SPAWNER_H_
 #define _ASTEROID_SPAWNER_H_
 
-#include "Asteroid.h"
-#include "SDL.h"
-#include "SDL_image.h"
-#include "json.hpp"
-#include <fstream>
-#include <list>
-#include "Star.h"
+class Star;
+class Asteroid;
 
 class AsteroidSpawner
 {

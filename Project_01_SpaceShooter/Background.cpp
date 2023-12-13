@@ -1,6 +1,4 @@
-#include "Background.h"
-#include "Renderer.h"
-#include "AssetManager.h"
+#include "GameCore.h"
 
 Background::Background()
 {
@@ -14,8 +12,8 @@ Background::~Background()
 
 void Background::Initialize(int posY)
 {
-	int windowWidth = Renderer::Instance().GetWidth();
-	int windowHeight = Renderer::Instance().GetHeight();
+	int windowWidth = RenderSystem::Instance().GetWidth();
+	int windowHeight = RenderSystem::Instance().GetHeight();
 
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
 	
@@ -26,9 +24,9 @@ void Background::Update()
 {
 	//Move back again when out of window
 	dstrect.y += scrollSpeed;
-	if (dstrect.y >= Renderer::Instance().GetHeight())
+	if (dstrect.y >= RenderSystem::Instance().GetHeight())
 	{
-		dstrect.y = -Renderer::Instance().GetHeight();
+		dstrect.y = -RenderSystem::Instance().GetHeight();
 	}
 }
 
@@ -38,7 +36,7 @@ void Background::Destroy()
 
 void Background::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Background::Load(json::JSON& _json)

@@ -2,13 +2,8 @@
 #ifndef _ENEMY_SPAWNER_H_
 #define _ENEMY_SPAWNER_H_
 
-#include "EnemyUFO.h"
-#include "EnemyShip.h"
-#include "SDL.h"
-#include "SDL_image.h"
-#include "json.hpp"
-#include <fstream>
-#include <list>
+class EnemyUFO;
+class EnemyShip;
 
 class EnemySpawner
 {

@@ -2,13 +2,6 @@
 #ifndef _ENEMY_UFO_H_
 #define _ENEMY_UFO_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-#include "SDL_image.h"
-#include "Circle.h"
-
 class EnemyUFO
 {
 private:

@@ -2,14 +2,8 @@
 #ifndef _ENEMY_SHIP_H_
 #define _ENEMY_SHIP_H_
 
-#include "EnemyProjectile.h"
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-#include "SDL_image.h"
-#include <list>
-#include "Circle.h"
+class EnemyProjectile;
+class Circle;
 
 class EnemyShip
 {

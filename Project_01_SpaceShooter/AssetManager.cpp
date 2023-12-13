@@ -1,5 +1,5 @@
 #include "AssetManager.h"
-#include "Renderer.h"
+#include "EngineCore.h"
 
 AssetManager* AssetManager::instance = nullptr;
 
@@ -15,7 +15,7 @@ SDL_Texture* AssetManager::LoadTexture(const char* texturePath)
 	if (!tempSurface) {
 		std::cout << "Failed to load image: " << IMG_GetError() << std::endl;
 	}
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderer(), tempSurface);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(RenderSystem::Instance().GetRenderer(), tempSurface);
 
 	SDL_FreeSurface(tempSurface);
 	return texture;

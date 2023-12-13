@@ -1,7 +1,4 @@
-#include "EnemySpawner.h"
-#include "Renderer.h"
-#include "CollisionDetection.h"
-#include "Circle.h"
+#include "GameCore.h"
 
 EnemySpawner::EnemySpawner()
 {
@@ -24,7 +21,7 @@ void EnemySpawner::Update()
 		ship->Render();
 
 		//Check if the ship is out of the window
-		if (ship->GetPositionY() > Renderer::Instance().GetHeight())
+		if (ship->GetPositionY() > RenderSystem::Instance().GetHeight())
 		{
 			ship->Destroy();
 			delete ship;
@@ -33,12 +30,12 @@ void EnemySpawner::Update()
 
 		//Get the collision circles
 		Circle shipCollider = ship->GetCollisionCircle();
-		Circle playerCollider = Renderer::Instance().GetPlayer()->GetCollisionCircle();
+		Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
 
 		//Check if the ship collides with the player
 		if (CollisionDetection::Instance().CheckCollision(playerCollider, shipCollider))
 		{
-			Renderer::Instance().GetPlayer()->Damaged();
+			RenderSystem::Instance().GetPlayer()->Damaged();
 			ship->Destroy();
 			delete ship;
 			return true; //Remove the ship
@@ -55,12 +52,12 @@ void EnemySpawner::Update()
 
 			//Get the collision circles
 			Circle ufoCollider = ufo->GetCollisionCircle();
-			Circle playerCollider = Renderer::Instance().GetPlayer()->GetCollisionCircle();
+			Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
 
 			//Check if the ufo collides with the player
 			if (CollisionDetection::Instance().CheckCollision(playerCollider, ufoCollider))
 			{
-				Renderer::Instance().GetPlayer()->Damaged();
+				RenderSystem::Instance().GetPlayer()->Damaged();
 				ufo->Destroy();
 				delete ufo;
 				return true; //Remove the ufo

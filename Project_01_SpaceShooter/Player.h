@@ -2,14 +2,7 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
-#include "Projectile.h"
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-#include "SDL_image.h"
-#include <list>
-#include "Circle.h"
+class Projectile;
 
 class Player
 {

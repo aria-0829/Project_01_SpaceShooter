@@ -1,8 +1,4 @@
-#include "EnemyShip.h".
-#include "Renderer.h"
-#include "AssetManager.h"
-#include "CollisionDetection.h"
-#include <random>
+#include "GameCore.h"
 
 EnemyShip::EnemyShip()
 {
@@ -19,7 +15,7 @@ void EnemyShip::Initialize()
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load enemy tex
 
 	//Enemy start positiom at random of top
-	int windowWidth = Renderer::Instance().GetWidth();
+	int windowWidth = RenderSystem::Instance().GetWidth();
 	dstrect = { 0, -imageHeight, imageWidth, imageHeight };
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -59,12 +55,12 @@ void EnemyShip::Update()
 
 			//Get the collision circles
 			Circle projectileCollider = projectile->GetCollisionCircle();
-			Circle playerCollider = Renderer::Instance().GetPlayer()->GetCollisionCircle();
+			Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
 
 			//Check if the projectile collides with the player
 			if (CollisionDetection::Instance().CheckCollision(playerCollider, projectileCollider))
 			{
-				Renderer::Instance().GetPlayer()->Damaged();
+				RenderSystem::Instance().GetPlayer()->Damaged();
 				projectile->Destroy();
 				delete projectile;
 				return true; //Remove the projectile
@@ -90,7 +86,7 @@ void EnemyShip::Destroy()
 
 void EnemyShip::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void EnemyShip::Load(json::JSON& _json)

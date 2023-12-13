@@ -2,12 +2,13 @@
 #ifndef _COLLISION_DETECTION_H_
 #define _COLLISION_DETECTION_H_
 
-#include "Player.h"
-#include "Projectile.h"
-#include "EnemyShip.h"
-#include "EnemyUFO.h"
-#include "EnemyProjectile.h"
-#include "Asteroid.h"
+//#include "Player.h"
+//#include "Projectile.h"
+//#include "EnemyShip.h"
+//#include "EnemyUFO.h"
+//#include "EnemyProjectile.h"
+//#include "Asteroid.h"
+#include "Circle.h"
 
 class CollisionDetection
 {

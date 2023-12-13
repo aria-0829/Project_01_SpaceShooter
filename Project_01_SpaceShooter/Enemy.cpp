@@ -1,8 +1,4 @@
-#include "Enemy.h"
-#include "Renderer.h"
-#include "AssetManager.h"
-#include "GameTime.h"
-#include "SDL_image.h"
+#include "GameCore.h"
 
 Enemy::Enemy()
 {
@@ -27,6 +23,6 @@ void Enemy::Destroy()
 
 void Enemy::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect); 
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 

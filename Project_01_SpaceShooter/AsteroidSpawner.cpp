@@ -1,7 +1,4 @@
-#include "AsteroidSpawner.h"
-#include "Renderer.h"
-#include "CollisionDetection.h"
-#include "Circle.h"
+#include "GameCore.h"
 
 AsteroidSpawner::AsteroidSpawner()
 {
@@ -24,7 +21,7 @@ void AsteroidSpawner::Update()
 		asteroid->Render();
 
 		//Check if the asteroid is out of the window
-		if (asteroid->GetPositionY() > Renderer::Instance().GetHeight())
+		if (asteroid->GetPositionY() > RenderSystem::Instance().GetHeight())
 		{
 			asteroid->Destroy();
 			delete asteroid;
@@ -33,23 +30,23 @@ void AsteroidSpawner::Update()
 
 		//Get the collision circles
 		Circle asteroidCollider = asteroid->GetCollisionCircle();
-		Circle playerCollider = Renderer::Instance().GetPlayer()->GetCollisionCircle();
+		Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
 
 		//Check if the asteroid collides with the player
 		if (CollisionDetection::Instance().CheckCollision(playerCollider, asteroidCollider))
 		{
-			Renderer::Instance().GetPlayer()->Damaged();
+			RenderSystem::Instance().GetPlayer()->Damaged();
 			asteroid->Destroy();
 			delete asteroid;
 			return true; //Remove the asteroid
 		}
 
 		//Check if the asteroid collides with the player's projectiles
-		for (const auto& projectile : Renderer::Instance().GetPlayer()->GetProjectiles())
+		for (const auto& projectile : RenderSystem::Instance().GetPlayer()->GetProjectiles())
 		{
 			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), asteroidCollider))
 			{
-				Renderer::Instance().GetPlayer()->RemoveProjectile(projectile);
+				RenderSystem::Instance().GetPlayer()->RemoveProjectile(projectile);
 				projectile->Destroy();
 				delete projectile; //Remove the projectile
 
@@ -71,7 +68,7 @@ void AsteroidSpawner::Update()
 			star->Render();
 
 			//Check if the star is out of the window
-			if (star->GetPositionY() > Renderer::Instance().GetHeight())
+			if (star->GetPositionY() > RenderSystem::Instance().GetHeight())
 			{
 				star->Destroy();
 				delete star;

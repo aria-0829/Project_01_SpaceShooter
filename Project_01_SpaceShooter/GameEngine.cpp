@@ -1,11 +1,9 @@
-#include "Game.h"
-#include "GameTime.h"
-#include "AssetManager.h"
-#include <thread>
+#include "EngineCore.h"
+#include "GameEngine.h"
 
-Game* Game::instance = nullptr;
+GameEngine* GameEngine::instance = nullptr;
 
-void Game::Initialize()
+void GameEngine::Initialize()
 {
 	//Load GameSettings.json
 	std::ifstream inputStream("Data/GameSettings.json");
@@ -14,25 +12,25 @@ void Game::Initialize()
 
 	//GameTime::Instance().Initialize();
 	AssetManager::Instance().Initialize();
-	Renderer::Instance().Load(documentData);
-	Renderer::Instance().Initialize();
+	RenderSystem::Instance().Load(documentData);
+	RenderSystem::Instance().Initialize();
 
 	std::cout << "Game Initialized" << std::endl << std::endl;
 }
 
-void Game::Update()
+void GameEngine::Update()
 {
 	while (isRunning)
 	{
 		GameTime::Instance().Update();
-		Renderer::Instance().Update();
+		RenderSystem::Instance().Update();
 	}
 }
 
-void Game::Destroy()
+void GameEngine::Destroy()
 {
 	GameTime::Instance().Destroy();
-	Renderer::Instance().Destroy();
+	RenderSystem::Instance().Destroy();
 	AssetManager::Instance().Destroy();
 	if (instance != nullptr)
 	{
@@ -40,13 +38,13 @@ void Game::Destroy()
 	}
 }
 
-void Game::Load(json::JSON& _json)
+void GameEngine::Load(json::JSON& _json)
 {
 	std::cout << "Game Loading..." << std::endl << std::endl;
 
 }
 
-void Game::Save()
+void GameEngine::Save()
 {
 	std::cout << "Game Saving..." << std::endl << std::endl;
 

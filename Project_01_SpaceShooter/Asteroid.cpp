@@ -1,8 +1,4 @@
-#include "Asteroid.h"
-#include "AssetManager.h"
-#include "Renderer.h"
-#include "CollisionDetection.h"
-#include <random>
+#include "GameCore.h"
 
 Asteroid::Asteroid()
 {
@@ -25,7 +21,7 @@ void Asteroid::Initialize()
 	float scale = scaleDis(gen);
 
 	//Generate a random start position
-	std::uniform_real_distribution<float> posDis(0, Renderer::Instance().GetWidth());
+	std::uniform_real_distribution<float> posDis(0, RenderSystem::Instance().GetWidth());
 	int posX = posDis(gen);
 
 	dstrect = { posX, -imageHeight, static_cast<int>(imageWidth * scale), static_cast<int>(imageHeight * scale) };  //Coming from top
@@ -46,7 +42,7 @@ void Asteroid::Destroy()
 
 void Asteroid::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Asteroid::Load(json::JSON& _json)

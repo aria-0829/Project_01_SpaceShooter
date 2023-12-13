@@ -1,4 +1,4 @@
-#include "GameTime.h"
+#include "EngineCore.h"
 
 GameTime* GameTime::instance = nullptr;
 

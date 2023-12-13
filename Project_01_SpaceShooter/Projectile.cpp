@@ -1,6 +1,4 @@
-#include "Projectile.h"
-#include "AssetManager.h"
-#include "Renderer.h"
+#include "GameCore.h"
 
 Projectile::Projectile()
 {
@@ -33,7 +31,7 @@ void Projectile::Destroy()
 
 void Projectile::Render()
 {
-	SDL_RenderCopy(Renderer::Instance().GetRenderer(), tex, NULL, &dstrect);
+	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void Projectile::Load()

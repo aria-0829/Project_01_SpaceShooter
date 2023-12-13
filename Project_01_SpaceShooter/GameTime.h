@@ -2,8 +2,6 @@
 #ifndef _GAME_TIME_H_
 #define _GAME_TIME_H_
 
-#include <chrono>
-
 class GameTime
 {
 private:
