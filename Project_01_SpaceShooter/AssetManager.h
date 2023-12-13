@@ -4,9 +4,6 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
-#include "json.hpp"
-#include <fstream>
-#include <list>
 
 class AssetManager
 {

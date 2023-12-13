@@ -1,5 +1,5 @@
 #include "CollisionDetection.h"
-#include <iostream>
+#include "EngineCore.h"
 
 CollisionDetection* CollisionDetection::instance = nullptr;
 

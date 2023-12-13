@@ -2,11 +2,6 @@
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-
 class Enemy
 {
 private:

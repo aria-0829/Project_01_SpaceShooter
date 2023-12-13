@@ -2,11 +2,6 @@
 #ifndef _STAR_H_
 #define _STAR_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-
 class Star
 {
 private:

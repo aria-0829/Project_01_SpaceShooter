@@ -2,12 +2,6 @@
 #ifndef _ASTEROID_H_
 #define _ASTEROID_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-#include "Circle.h"
-
 class Asteroid
 {
 private:

@@ -2,12 +2,6 @@
 #ifndef _ENEMY_PROJECTILE_H_
 #define _ENEMY_PROJECTILE_H_
 
-#include <string>
-#include "json.hpp"
-#include <fstream>
-#include "SDL.h"
-#include "Circle.h"
-
 class EnemyProjectile
 {
 private:

@@ -1,13 +1,12 @@
-#include "Renderer.h"
-#include "AssetManager.h"
-#include "Game.h"
-#include "CollisionDetection.h"
+#include "GameCore.h"
 
-Renderer* Renderer::instance = nullptr;
+#include "GameEngine.h"
 
-void Renderer::Initialize()
+RenderSystem* RenderSystem::instance = nullptr;
+
+void RenderSystem::Initialize()
 {
-	//Create window and renderer
+	//Create window and RenderSystem
 	window = SDL_CreateWindow("Space Shooter", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, fullscreen);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
@@ -15,10 +14,10 @@ void Renderer::Initialize()
 	background2->Initialize(-height);
 	player->Initialize();
 
-	std::cout << "Renderer Initialized" << std::endl;
+	std::cout << "RenderSystem Initialized" << std::endl;
 }
 
-void Renderer::Update()
+void RenderSystem::Update()
 {
 	int FPS = 60;
 	int frameDelay = 1000 / FPS;
@@ -35,7 +34,7 @@ void Renderer::Update()
 	{
 		if (event.window.event == SDL_WINDOWEVENT_CLOSE)
 		{
-			Game::Instance().setGameRunning(false);
+			GameEngine::Instance().setGameRunning(false);
 			Destroy();
 		}
 		else
@@ -68,7 +67,7 @@ void Renderer::Update()
 	SDL_RenderPresent(renderer);
 }
 
-void Renderer::CheckCollisions()
+void RenderSystem::CheckCollisions()
 { 
 	 std::list<Projectile*> projectilesToRemove;
 
@@ -113,7 +112,7 @@ void Renderer::CheckCollisions()
 }
 
 
-void Renderer::Destroy()
+void RenderSystem::Destroy()
 {
 	//Destroy enemySpawner
 	enemySpawner->Destroy();
@@ -147,10 +146,10 @@ void Renderer::Destroy()
 		delete instance;
 	}
 
-	std::cout << "Renderer Destroyed" << std::endl;
+	std::cout << "RenderSystem Destroyed" << std::endl;
 }
 
-void Renderer::Load(json::JSON& _json)
+void RenderSystem::Load(json::JSON& _json)
 {
 	if (_json.hasKey("RenderSettings"))
 	{
