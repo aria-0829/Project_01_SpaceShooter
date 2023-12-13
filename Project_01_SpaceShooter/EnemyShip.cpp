@@ -1,15 +1,5 @@
 #include "GameCore.h"
 
-EnemyShip::EnemyShip()
-{
-	std::cout << "EnemyShip Created" << std::endl;
-}
-
-EnemyShip::~EnemyShip()
-{
-	std::cout << "EnemyShip Deleted" << std::endl;
-}
-
 void EnemyShip::Initialize()
 {
 	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load enemy tex
@@ -25,6 +15,8 @@ void EnemyShip::Initialize()
 
 void EnemyShip::Update()
 {
+	Entity::Update();
+
 	dstrect.y += speed;
 
 	static int frameCount = 0;
@@ -67,8 +59,6 @@ void EnemyShip::Update()
 			}
 			return false; //Keep the projectile
 		});
-
-	collisionCircle = { dstrect.x, dstrect.y, dstrect.w / 2 }; //Update collision circle
 }
 
 void EnemyShip::Destroy()
@@ -80,13 +70,7 @@ void EnemyShip::Destroy()
 	}
 	enemyProjectiles.clear();
 
-	SDL_DestroyTexture(tex);
-	tex = nullptr;
-}
-
-void EnemyShip::Render()
-{
-	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
+	Entity::Destroy();
 }
 
 void EnemyShip::Load(json::JSON& _json)

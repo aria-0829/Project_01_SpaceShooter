@@ -63,8 +63,7 @@ void Player::Destroy()
 	}
 	projectiles.clear();
 
-	SDL_DestroyTexture(tex);
-	tex = nullptr;
+	Entity::Destroy();
 }
 
 

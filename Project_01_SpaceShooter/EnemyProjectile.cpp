@@ -1,37 +1,10 @@
 #include "GameCore.h"
 
-EnemyProjectile::EnemyProjectile()
-{
-	//std::cout << "EnemyProjectile Created" << std::endl;
-}
-
-EnemyProjectile::~EnemyProjectile()
-{
-	//std::cout << "EnemyProjectile Deleted" << std::endl;
-}
-
-void EnemyProjectile::Initialize(int posX, int posY)
-{
-	tex = AssetManager::Instance().LoadTexture((char*)imagePath.c_str()); //Load tex
-	dstrect = { posX, posY, imageWidth, imageHeight };
-}
-
 void EnemyProjectile::Update()
 {
+	Entity::Update();
+
 	dstrect.y += speed;
-
-	collisionCircle = { dstrect.x, dstrect.y, dstrect.h / 2 }; //Update collision circle
-}
-
-void EnemyProjectile::Destroy()
-{
-	SDL_DestroyTexture(tex);
-	tex = nullptr;
-}
-
-void EnemyProjectile::Render()
-{
-	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
 void EnemyProjectile::Load(json::JSON& _json)

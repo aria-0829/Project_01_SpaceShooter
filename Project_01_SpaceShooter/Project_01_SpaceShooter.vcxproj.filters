@@ -66,9 +66,6 @@
     <ClCompile Include="Background.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyProjectile.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -88,9 +85,6 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Star.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,9 +134,6 @@
     <ClInclude Include="Background.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyProjectile.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
@@ -162,9 +153,6 @@
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="Star.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

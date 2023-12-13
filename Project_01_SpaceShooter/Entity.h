@@ -7,7 +7,7 @@
 
 class Entity : public IRenderable
 {
-private:
+protected:
 	int speed = 0;
 	int imageWidth = 0;
 	int imageHeight = 0;
@@ -20,12 +20,12 @@ public:
 	Entity() = default;
 	virtual ~Entity() = default;
 
-	virtual void Initialize();
+	virtual void Initialize(int posX, int posY);
 	virtual void Update();
 	virtual void Destroy();
 	virtual void Render();
 	virtual void Load(json::JSON& _json);
-	//int GetPositionY() { return dstrect.y; }
+	int GetPositionY() { return dstrect.y; }
 	Circle GetCollisionCircle() const { return collisionCircle; }
 };
 

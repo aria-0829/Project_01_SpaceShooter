@@ -11,7 +11,7 @@ protected:
 	IRenderable();
 	virtual ~IRenderable();
 
-	virtual void Render() = 0;
+	//virtual void Render() = 0;
 
 };
 
