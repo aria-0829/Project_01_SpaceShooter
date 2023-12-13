@@ -22,7 +22,7 @@ public:
 	void SpawnAsteroids();
 	void AddAsteroid(Asteroid* _asteroid);
 	void SpawnStars();
-	void Load();
+	void Load(json::JSON& _json);
 };
 
 #endif // !_ASTEROID_SPAWNER_H_

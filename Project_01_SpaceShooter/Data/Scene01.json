@@ -1,15 +1,54 @@
 {
-  "Player": {
-    "lives": 3,
-    "speed": 5,
-    "imagePath": "Resources/Mainplayer/player.png",
-    "imageWidth": 48,
-    "imageHeight": 48
-  },
   "Background": {
     "scrollSpeed": 2,
     "imagePath": "Resources/Background/backgroundColor.png",
     "imageWidth": 256,
     "imageHeight": 256
+  },
+  "Player": {
+    "lives": 3,
+    "speed": 5,
+    "imagePath": "Resources/Mainplayer/player.png",
+    "imageWidth": 48,
+    "imageHeight": 48,
+    "Projectile": {
+      "speed": 5,
+      "imagePath": "Resources/Mainplayer/laserGreen.png",
+      "imageWidth": 5,
+      "imageHeight": 17
+    }
+  },
+  "Enemies": {
+    "EnemyShip": {
+        "speed": 3,
+        "imagePath": "Resources/Enemies/enemyShip.png",
+        "imageWidth": 48,
+        "imageHeight": 48,
+        "EnemyProjectile": {
+            "speed": 5,
+            "imagePath": "Resources/Enemies/laserRed.png",
+            "imageWidth": 5,
+            "imageHeight": 17
+        }
+    },
+    "EnemyUFO": {
+        "speed": 2,
+        "imagePath": "Resources/Enemies/enemyUFO.png",
+        "imageWidth": 48,
+        "imageHeight": 48
+    }
+  },
+  "AsteroidSpawner": {
+    "Asteroid": {
+      "speed": 1,
+      "imagePath": "Resources/Asteroids/meteorBig.png",
+      "imageWidth": 64,
+      "imageHeight": 64
+    },
+    "Star": {
+          "imagePath": "Resources/Background/starBig.png",
+          "imageWidth": 23,
+          "imageHeight": 21
+    }
   }
 }

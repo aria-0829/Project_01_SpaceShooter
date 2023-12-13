@@ -2,6 +2,8 @@
 #ifndef _RENDER_SYSTEM_H_
 #define _RENDER_SYSTEM_H_
 
+class IRenderable;
+
 class RenderSystem
 {
 private:
@@ -12,6 +14,8 @@ private:
 	bool fullscreen = false;
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+
+	std::list<IRenderable*> iRenderables;
 
 	inline explicit RenderSystem() = default;
 	inline ~RenderSystem() = default;
@@ -35,6 +39,9 @@ public:
 	int GetWidth() { return width; }
 	int GetHeight() { return height; }
 	SDL_Renderer* GetRenderer() { return renderer; }
+
+	void AddIRenderable(IRenderable* _iRenderable) { iRenderables.push_back(_iRenderable); }
+	void RemoveIRenderable(IRenderable* _iRenderable) { iRenderables.remove(_iRenderable); }
 };
 
 #endif // !_RENDERER_H_

@@ -1,15 +1,5 @@
 #include "GameCore.h"
 
-Player::Player()
-{
-	std::cout << "Player Created" << std::endl;
-}
-
-Player::~Player()
-{
-	std::cout << "Player Deleted" << std::endl;
-}
-
 void Player::Initialize()
 {
 	windowWidth = RenderSystem::Instance().GetWidth();
@@ -87,7 +77,7 @@ void Player::Shoot()
 	{
 		Projectile* projectile = new Projectile();
 		AddProjectile(projectile);
-		projectile->Load();
+		projectile->Load(projectileData);
 		projectile->Initialize((dstrect.x + imageWidth /2), dstrect.y);
 	}
 
@@ -161,6 +151,11 @@ void Player::Load(json::JSON& _json)  //Load player data from json file
 		if (playerData.hasKey("imageHeight"))
 		{
 			imageHeight = playerData["imageHeight"].ToInt();  //Load the player image height
+		}
+
+		if (playerData.hasKey("Projectile"))
+		{
+			projectileData = playerData["Projectile"];  //Load the player projectile data
 		}
 	}
 }

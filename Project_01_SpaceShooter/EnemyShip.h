@@ -14,7 +14,10 @@ private:
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
+
 	std::list<EnemyProjectile*> enemyProjectiles;
+	json::JSON enemyProjectileData;
+
 	Circle collisionCircle = { 0, 0, 0 };
 
 public:

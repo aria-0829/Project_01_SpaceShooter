@@ -1,8 +1,8 @@
 #include "GameCore.h"
 
-Game* Game::instance = nullptr;
+Scene* Scene::instance = nullptr;
 
-void Game::Initialize()
+void Scene::Initialize()
 {
 	int height = RenderSystem::Instance().GetHeight();
 	background1->Initialize(0);
@@ -10,7 +10,7 @@ void Game::Initialize()
 	player->Initialize();
 }
 
-void Game::Update()
+void Scene::Update()
 {
 	background1->Update();
 	background1->Render();
@@ -26,7 +26,7 @@ void Game::Update()
 	CheckCollisions();
 }
 
-void Game::Destroy()
+void Scene::Destroy()
 {
 	//Destroy enemySpawner
 	enemySpawner->Destroy();
@@ -51,7 +51,7 @@ void Game::Destroy()
 	delete ui;
 }
 
-void Game::Load(json::JSON& _json)
+void Scene::Load(json::JSON& _json)
 {
 	if (_json.hasKey("scenefile")) 
 	{
@@ -68,18 +68,17 @@ void Game::Load(json::JSON& _json)
 
 		player = new Player();
 		player->Load(sceneData);
+
+		asteroidSpawner = new AsteroidSpawner();
+		asteroidSpawner->Load(sceneData);
+
+		enemySpawner = new EnemySpawner();
+		enemySpawner->Load(sceneData);
 	}
-
-	asteroidSpawner = new AsteroidSpawner();
-	asteroidSpawner->Load();
-
-	enemySpawner = new EnemySpawner();
-	enemySpawner->Load();
-
 	ui = new UI();
 }
 
-void Game::CheckCollisions()
+void Scene::CheckCollisions()
 {
 	std::list<Projectile*> projectilesToRemove;
 

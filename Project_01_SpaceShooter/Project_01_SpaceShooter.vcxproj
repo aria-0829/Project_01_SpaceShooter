@@ -161,14 +161,16 @@
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="EnemyUFO.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="IRenderable.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -185,24 +187,22 @@
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="EnemyUFO.h" />
     <ClInclude Include="EngineCore.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="IRenderable.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\Asteroid.json" />
-    <None Include="Data\Enemies.json" />
     <None Include="Data\GameSettings.json" />
-    <None Include="Data\Projectile.json" />
     <None Include="Data\Scene01.json" />
-    <None Include="Data\Star.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

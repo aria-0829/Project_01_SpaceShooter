@@ -19,7 +19,7 @@ public:
 	void Update();
 	void Destroy();
 	void SpawnEnemies();
-	void Load();
+	void Load(json::JSON& _json);
 	void AddShip(EnemyShip* _enemy) { ships.push_back(_enemy); }
 	void RemoveShip(EnemyShip* _enemy) { ships.remove(_enemy); }
 	void AddUFO(EnemyUFO* _enemy) { ufos.push_back(_enemy); }

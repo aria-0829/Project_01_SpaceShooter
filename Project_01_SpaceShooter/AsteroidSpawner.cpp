@@ -30,23 +30,23 @@ void AsteroidSpawner::Update()
 
 		//Get the collision circles
 		Circle asteroidCollider = asteroid->GetCollisionCircle();
-		Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
+		Circle playerCollider = Scene::Instance().GetPlayer()->GetCollisionCircle();
 
 		//Check if the asteroid collides with the player
 		if (CollisionDetection::Instance().CheckCollision(playerCollider, asteroidCollider))
 		{
-			Game::Instance().GetPlayer()->Damaged();
+			Scene::Instance().GetPlayer()->Damaged();
 			asteroid->Destroy();
 			delete asteroid;
 			return true; //Remove the asteroid
 		}
 
 		//Check if the asteroid collides with the player's projectiles
-		for (const auto& projectile : Game::Instance().GetPlayer()->GetProjectiles())
+		for (const auto& projectile : Scene::Instance().GetPlayer()->GetProjectiles())
 		{
 			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), asteroidCollider))
 			{
-				Game::Instance().GetPlayer()->RemoveProjectile(projectile);
+				Scene::Instance().GetPlayer()->RemoveProjectile(projectile);
 				projectile->Destroy();
 				delete projectile; //Remove the projectile
 
@@ -135,24 +135,20 @@ void AsteroidSpawner::SpawnStars()
 	++frameCount;
 }
 
-void AsteroidSpawner::Load()
+void AsteroidSpawner::Load(json::JSON& _json)
 {
-	std::ifstream inputStream("Data/Asteroid.json");
-	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-	json::JSON documentData = json::JSON::Load(str);
-
-	if (documentData.hasKey("Asteroid"))
+	if (_json.hasKey("AsteroidSpawner"))
 	{
-		asteroidData = documentData["Asteroid"];
-	}
+		json::JSON asteroidSpawnerSettings = _json["AsteroidSpawner"];
 
-	std::ifstream inputStreamStar("Data/Star.json");
-	std::string strStar((std::istreambuf_iterator<char>(inputStreamStar)), std::istreambuf_iterator<char>());
-	json::JSON documentDataStar = json::JSON::Load(strStar);
-
-	if (documentDataStar.hasKey("Star"))
-	{
-		starData = documentDataStar["Star"];
+		if (asteroidSpawnerSettings.hasKey("Asteroid"))
+		{
+			asteroidData = asteroidSpawnerSettings["Asteroid"];
+		}
+		if (asteroidSpawnerSettings.hasKey("Star"))
+		{
+			starData = asteroidSpawnerSettings["Star"];
+		}
 	}
 }
 
