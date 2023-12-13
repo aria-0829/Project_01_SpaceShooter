@@ -30,13 +30,8 @@
 // Engine Stuff
 #include "AssetManager.h"
 #include "RenderSystem.h"
-#include "SceneManager.h"
-
 #include "CollisionDetection.h"
 #include "Circle.h"
 #include "GameTime.h"
 #include "UI.h"
-#include "Scene.h"
-
 //#include "GameEngine.h"
-//#include "Entity.h"

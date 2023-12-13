@@ -30,23 +30,23 @@ void AsteroidSpawner::Update()
 
 		//Get the collision circles
 		Circle asteroidCollider = asteroid->GetCollisionCircle();
-		Circle playerCollider = RenderSystem::Instance().GetPlayer()->GetCollisionCircle();
+		Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
 
 		//Check if the asteroid collides with the player
 		if (CollisionDetection::Instance().CheckCollision(playerCollider, asteroidCollider))
 		{
-			RenderSystem::Instance().GetPlayer()->Damaged();
+			Game::Instance().GetPlayer()->Damaged();
 			asteroid->Destroy();
 			delete asteroid;
 			return true; //Remove the asteroid
 		}
 
 		//Check if the asteroid collides with the player's projectiles
-		for (const auto& projectile : RenderSystem::Instance().GetPlayer()->GetProjectiles())
+		for (const auto& projectile : Game::Instance().GetPlayer()->GetProjectiles())
 		{
 			if (CollisionDetection::Instance().CheckCollision(projectile->GetCollisionCircle(), asteroidCollider))
 			{
-				RenderSystem::Instance().GetPlayer()->RemoveProjectile(projectile);
+				Game::Instance().GetPlayer()->RemoveProjectile(projectile);
 				projectile->Destroy();
 				delete projectile; //Remove the projectile
 
