@@ -21,7 +21,7 @@ public:
 	void Update();
 	void Destroy();
 	void Render();
-	void Load();
+	void Load(json::JSON& _json);
 	int GetPositionY() { return dstrect.y; }
 	Circle GetCollisionCircle() { return collisionCircle; }
 };

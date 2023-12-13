@@ -30,12 +30,12 @@ void EnemySpawner::Update()
 
 		//Get the collision circles
 		Circle shipCollider = ship->GetCollisionCircle();
-		Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
+		Circle playerCollider = Scene::Instance().GetPlayer()->GetCollisionCircle();
 
 		//Check if the ship collides with the player
 		if (CollisionDetection::Instance().CheckCollision(playerCollider, shipCollider))
 		{
-			Game::Instance().GetPlayer()->Damaged();
+			Scene::Instance().GetPlayer()->Damaged();
 			ship->Destroy();
 			delete ship;
 			return true; //Remove the ship
@@ -52,12 +52,12 @@ void EnemySpawner::Update()
 
 			//Get the collision circles
 			Circle ufoCollider = ufo->GetCollisionCircle();
-			Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
+			Circle playerCollider = Scene::Instance().GetPlayer()->GetCollisionCircle();
 
 			//Check if the ufo collides with the player
 			if (CollisionDetection::Instance().CheckCollision(playerCollider, ufoCollider))
 			{
-				Game::Instance().GetPlayer()->Damaged();
+				Scene::Instance().GetPlayer()->Damaged();
 				ufo->Destroy();
 				delete ufo;
 				return true; //Remove the ufo
@@ -116,15 +116,11 @@ void EnemySpawner::Destroy()
 
 }
 
-void EnemySpawner::Load()
+void EnemySpawner::Load(json::JSON& _json)
 {
-	std::ifstream inputStream("Data/Enemies.json");
-	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-	json::JSON documentData = json::JSON::Load(str);
-
-	if (documentData.hasKey("Enemies"))
+	if (_json.hasKey("Enemies"))
 	{
-		enemiesData = documentData["Enemies"];
+		enemiesData = _json["Enemies"];
 	}
 }
 

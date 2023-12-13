@@ -4,7 +4,7 @@
 
 class Projectile;
 
-class Player
+class Player: public Entity
 {
 private:
 	int lives = 0;
@@ -18,12 +18,15 @@ private:
 	std::string imagePath = "";
 	SDL_Texture* tex = nullptr;
 	SDL_Rect dstrect = { 0, 0, 0, 0 };
+
 	std::list<Projectile*> projectiles;
+	json::JSON projectileData;
+
 	Circle collisionCircle = { 0, 0, 0 };;
 
 public:
-	Player();
-	~Player();
+	Player() = default;
+	~Player() override = default;
 
 	void Initialize();
 	void Update();

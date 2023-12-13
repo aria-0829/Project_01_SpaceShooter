@@ -34,34 +34,25 @@ void Projectile::Render()
 	SDL_RenderCopy(RenderSystem::Instance().GetRenderer(), tex, NULL, &dstrect);
 }
 
-void Projectile::Load()
+void Projectile::Load(json::JSON& _json)
 {
-	std::ifstream inputStream("Data/Projectile.json");
-	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-	json::JSON documentData = json::JSON::Load(str);
-
-	if (documentData.hasKey("Projectile"))
+	if (_json.hasKey("speed"))
 	{
-		json::JSON projectileData = documentData["Projectile"];
+		speed = _json["speed"].ToInt();  //Load speed
+	}
 
-		if (projectileData.hasKey("speed"))
-		{
-			speed = projectileData["speed"].ToInt();  //Load speed
-		}
+	if (_json.hasKey("imagePath"))
+	{
+		imagePath = _json["imagePath"].ToString();  //Load image path
+	}
 
-		if (projectileData.hasKey("imagePath"))
-		{
-			imagePath = projectileData["imagePath"].ToString();  //Load image path
-		}
+	if (_json.hasKey("imageWidth"))
+	{
+		imageWidth = _json["imageWidth"].ToInt();  //Load image width
+	}
 
-		if (projectileData.hasKey("imageWidth"))
-		{
-			imageWidth = projectileData["imageWidth"].ToInt();  //Load image width
-		}
-
-		if (projectileData.hasKey("imageHeight"))
-		{
-			imageHeight = projectileData["imageHeight"].ToInt();  //Load image height
-		}
+	if (_json.hasKey("imageHeight"))
+	{
+		imageHeight = _json["imageHeight"].ToInt();  //Load image height
 	}
 }

@@ -34,7 +34,7 @@ void EnemyShip::Update()
 	{
 		EnemyProjectile* projectile = new EnemyProjectile();
 		enemyProjectiles.push_back(projectile);
-		projectile->Load();
+		projectile->Load(enemyProjectileData);
 		projectile->Initialize((dstrect.x + imageWidth / 2), dstrect.y + imageHeight);
 	}
 
@@ -55,12 +55,12 @@ void EnemyShip::Update()
 
 			//Get the collision circles
 			Circle projectileCollider = projectile->GetCollisionCircle();
-			Circle playerCollider = Game::Instance().GetPlayer()->GetCollisionCircle();
+			Circle playerCollider = Scene::Instance().GetPlayer()->GetCollisionCircle();
 
 			//Check if the projectile collides with the player
 			if (CollisionDetection::Instance().CheckCollision(playerCollider, projectileCollider))
 			{
-				Game::Instance().GetPlayer()->Damaged();
+				Scene::Instance().GetPlayer()->Damaged();
 				projectile->Destroy();
 				delete projectile;
 				return true; //Remove the projectile
@@ -113,6 +113,11 @@ void EnemyShip::Load(json::JSON& _json)
 		if (shipData.hasKey("imageHeight"))
 		{
 			imageHeight = shipData["imageHeight"].ToInt();  //Load image height
+		}
+
+		if (shipData.hasKey("EnemyProjectile"))
+		{
+			enemyProjectileData = shipData["EnemyProjectile"];  //Load the player projectile data
 		}
 	}
 }

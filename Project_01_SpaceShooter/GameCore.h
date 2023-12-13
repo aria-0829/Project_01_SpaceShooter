@@ -3,7 +3,7 @@
 #define _GAME_CORE_H_
 
 #include "EngineCore.h"
-#include "Game.h"
+#include "Scene.h"
 
 #include "Player.h"
 #include "Projectile.h"
